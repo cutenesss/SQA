@@ -5,6 +5,8 @@
  */
 package Object;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  *
@@ -19,6 +21,15 @@ public class CauHinh {
     private double chiSoMuc1;
     private double chiSoMuc2;
     private double chiSoMuc3;
+    private Date ngayApDung;
+
+    public Date getNgayApDung() {
+        return ngayApDung;
+    }
+
+    public void setNgayApDung(Date ngayApDung) {
+        this.ngayApDung = ngayApDung;
+    }
 
     public CauHinh(){
         
@@ -92,5 +103,12 @@ public class CauHinh {
         this.chiSoMuc3 = chiSoMuc3;
     }
     
-    
+    public Object[] getObject(int order){
+        String pattern = "dd-MM-YYYY";
+        DateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String ngay = simpleDateFormat.format(this.getNgayApDung());
+        return new Object[]{ 
+            order, ngay
+        };
+    }
 }

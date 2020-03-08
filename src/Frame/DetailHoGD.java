@@ -7,12 +7,23 @@ package Frame;
 
 import DAO.CauHinhDAO;
 import DAO.HoaDonDAO;
+import static Frame.DanhSachHoGD.listHoGD;
+import static Frame.DanhSachHoGD.result;
 import Object.CauHinh;
 import Object.HoGiaDinh;
 import Object.HoaDon;
 import Object.SoNuoc;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -25,7 +36,9 @@ public class DetailHoGD extends javax.swing.JFrame {
      */
     DefaultTableModel dtm;    
     public static ArrayList<HoaDon> listHoaDon;
-    public static CauHinh cauHinh;
+    public static ArrayList<CauHinh> cauHinh;
+    public static CauHinh result;
+    private boolean isPushed;
     
     public DetailHoGD() {
         initComponents();
@@ -36,9 +49,119 @@ public class DetailHoGD extends javax.swing.JFrame {
         jTextField3.setText(DanhSachHoGD.getHoGD().getMaHoGD());
         jTextField4.setText(DanhSachHoGD.getHoGD().getSdt());
         jTextField5.setText(DanhSachHoGD.getHoGD().getEmail());
+        jTable1.getColumn("Chi tiết").setCellRenderer(new DetailHoGD.ButtonRenderer());
+        jTable1.getColumn("Chi tiết").setCellEditor(new DetailHoGD.ButtonEditor(new JCheckBox()));
         HoaDonDAO st = new HoaDonDAO();
-        listHoaDon = st.getListHoaDon();
+        listHoaDon = st.getListHoaDon(DanhSachHoGD.getHoGD().getIdHoGD());
         CauHinhDAO st2 = new CauHinhDAO();
+        if (!listHoaDon.isEmpty()) {
+            for (int i = 0; i < listHoaDon.size(); i++) {
+                cauHinh = st2.getCauHinh(listHoaDon.get(i).getCauHinh().getIdcauhinh());
+                double a = listHoaDon.get(i).getSoNuoc().getChiSoBD();
+                double b = listHoaDon.get(i).getSoNuoc().getChiSoKT();
+                double all = b-a;
+                double bill = tinh(cauHinh.get(0), all);
+                dtm.addRow(listHoaDon.get(i).getObject(i + 1, bill));
+            }
+        } 
+        else {
+            HoaDon s = new HoaDon(0, new HoGiaDinh(), new CauHinh(), new SoNuoc(), null);
+            for (int i = 0; i < 3; i++) {
+                dtm.addRow(s.getObject(0,0));
+            }
+        }
+    }
+    
+    public static CauHinh getCauHinh() {
+        return result;
+    }
+    
+    public static double tinh(CauHinh c, double a){
+        if (a <= c.getChiSoMuc1()) return a * c.getMuc1();
+        else if (a <= c.getChiSoMuc2() ) {
+            double s = c.getChiSoMuc1()* c.getMuc1() + (a-c.getChiSoMuc1()) * c.getMuc2();
+            return s;
+        }
+        else if (a <= c.getChiSoMuc3() ){
+            double s = c.getChiSoMuc1()* c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + (a-c.getChiSoMuc3()) * c.getMuc3();
+            return s;
+        }
+        else {
+            double s = c.getChiSoMuc1()* c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + c.getChiSoMuc3() * c.getMuc3() + (a-c.getChiSoMuc3()) * c.getMuc4();
+            return s;
+        }
+    }
+    
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "Xem cấu hình sử dụng" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        protected JButton button;
+        private String label;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            result = new CauHinh();
+            result = listHoaDon.get(row).getCauHinh();
+            label = (value == null) ? "Xem cấu hình sử dụng" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                CauHinhChiTiet dsf = new CauHinhChiTiet();
+                dsf.taoBang(result.getIdcauhinh());
+                dsf.setVisible(true);
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
     }
 
     /**
@@ -63,6 +186,7 @@ public class DetailHoGD extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,10 +204,7 @@ public class DetailHoGD extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Ngày bắt đầu", "Ngày kết thúc", "Chỉ số đầu tháng", "Chỉ số cuối tháng", "Thành tiền", "Ngày thanh toán", "Chi tiết"
@@ -93,13 +214,14 @@ public class DetailHoGD extends javax.swing.JFrame {
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(50);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(7).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(7).setMaxWidth(80);
+            jTable1.getColumnModel().getColumn(7).setMinWidth(160);
+            jTable1.getColumnModel().getColumn(7).setMaxWidth(160);
         }
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Quay lại");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -136,7 +258,10 @@ public class DetailHoGD extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 143, Short.MAX_VALUE)))
+                        .addGap(0, 216, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -159,16 +284,19 @@ public class DetailHoGD extends javax.swing.JFrame {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new DanhSachHoGD().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,6 +334,7 @@ public class DetailHoGD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

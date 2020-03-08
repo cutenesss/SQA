@@ -5,6 +5,8 @@
  */
 package Object;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -17,17 +19,17 @@ public class HoaDon {
     private HoGiaDinh hoGD;
     private CauHinh cauHinh;
     private SoNuoc soNuoc;
-    private Date ngayThanhLap;
+    private Date ngayThanhToan;
 
     public HoaDon() {
     }
     
-    public HoaDon(int idHoaDon, HoGiaDinh hoGD, CauHinh cauHinh, SoNuoc soNuoc, Date ngayThanhLap) {
+    public HoaDon(int idHoaDon, HoGiaDinh hoGD, CauHinh cauHinh, SoNuoc soNuoc, Date ngayThanhToan) {
         this.idHoaDon = idHoaDon;
         this.hoGD = hoGD;
         this.cauHinh = cauHinh;
         this.soNuoc = soNuoc;
-        this.ngayThanhLap = ngayThanhLap;
+        this.ngayThanhToan = ngayThanhToan;
     }
 
     public int getIdHoaDon() {
@@ -62,17 +64,21 @@ public class HoaDon {
         this.soNuoc = soNuoc;
     }
 
-    public Date getNgayThanhLap() {
-        return ngayThanhLap;
+    public Date getNgayThanhToan() {
+        return ngayThanhToan;
     }
 
-    public void setNgayThanhLap(Date ngayThanhLap) {
-        this.ngayThanhLap = ngayThanhLap;
+    public void setNgayThanhToan(Date ngayThanhToan) {
+        this.ngayThanhToan = ngayThanhToan;
     }
     
-    public Object[] getObject(int order){
+    public Object[] getObject(int order, double bill){
+        String pattern = "dd-MM-YYYY";
+        DateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String bd = simpleDateFormat.format(this.getSoNuoc().getNgayBD());
+        String kt = simpleDateFormat.format(this.getSoNuoc().getNgayKT());
         return new Object[]{ 
-            order, this.getHoGD(), this.getCauHinh(), this.getSoNuoc(), this.getNgayThanhLap()
+            order, bd, kt, this.getSoNuoc().getChiSoBD(), this.getSoNuoc().getChiSoKT(), bill, this.getNgayThanhToan()
         };
     }
 }

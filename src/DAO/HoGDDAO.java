@@ -29,6 +29,7 @@ public class HoGDDAO extends DAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 HoGiaDinh s = new HoGiaDinh();
+                s.setIdHoGD(rs.getInt("idHoGD"));
                 s.setTenChuHo(rs.getString("tenChuHo"));
                 s.setDiaChi(rs.getString("diaChi"));
                 s.setSdt(rs.getString("sdt"));
