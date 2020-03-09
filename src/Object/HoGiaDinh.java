@@ -28,7 +28,7 @@ public class HoGiaDinh {
         this.maHoGD = maHoGD;
         this.email = email;
     }
-
+    
     public int getIdHoGD() {
         return idHoGD;
     }
