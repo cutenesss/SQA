@@ -77,8 +77,9 @@ public class HoaDon {
         DateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String bd = simpleDateFormat.format(this.getSoNuoc().getNgayBD());
         String kt = simpleDateFormat.format(this.getSoNuoc().getNgayKT());
+        String tt = simpleDateFormat.format(this.getNgayThanhToan());
         return new Object[]{ 
-            order, bd, kt, this.getSoNuoc().getChiSoBD(), this.getSoNuoc().getChiSoKT(), bill, this.getNgayThanhToan()
+            order, bd, kt, this.getSoNuoc().getChiSoBD(), this.getSoNuoc().getChiSoKT(), bill, tt
         };
     }
 }

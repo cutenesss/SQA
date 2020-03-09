@@ -106,7 +106,7 @@ public class DanhSachHoGD extends javax.swing.JFrame {
             }
             result = new HoGiaDinh();
             result = listHoGD.get(row);
-            label = (value == null) ? "" : value.toString();
+            label = (value == null) ? "Xem chi tiết" : value.toString();
             button.setText(label);
             isPushed = true;
             return button;
