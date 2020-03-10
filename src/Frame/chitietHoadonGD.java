@@ -56,23 +56,14 @@ public class chitietHoadonGD extends javax.swing.JFrame {
         edt_email.setText(hgd.getEmail());
         // luu het cac file lai di
         HoaDonDAO st = new HoaDonDAO();
-        listHoaDon = st.getListHoaDon();
+        listHoaDon = st.getListHoaDon(hgd.getIdHoGD());
          System.out.println("size1 = "+listHoaDon.size());
         CauHinhDAO st2 = new CauHinhDAO();
         //
         hoadon = new HoaDon();
-        ArrayList<HoaDon> listHoaDon_rieng = new ArrayList<HoaDon>();
-//        HoGiaDinh hoGiaDinh = new HoGiaDinh();
-//        HoaDon hoadon = new HoaDon();
-        for (HoaDon hd : listHoaDon) {
-            if (hd.getHoGD().equals(hgd)) {
-                listHoaDon_rieng.add(hd);
-               
-            }
-        }
-         System.out.println("size2 = "+listHoaDon_rieng.size());
-       if(!listHoaDon_rieng.isEmpty()) hoadon = listHoaDon_rieng.get(listHoaDon_rieng.size() - 1);
-       /*
+
+       if(!listHoaDon.isEmpty()) hoadon = listHoaDon.get(listHoaDon.size() - 1);
+       
         if (hoadon != null) {
             SoNuoc soNuoc = hoadon.getSoNuoc();
             CauHinh cauHinh = hoadon.getCauHinh();
@@ -81,16 +72,16 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             Double chisoBD = soNuoc.getChiSoBD();
             Double chisoKT = soNuoc.getChiSoKT();
             // so tien tung muc
-            Double muc1 = cauHinh.getMuc1();
-            Double muc2 = cauHinh.getMuc2();
-            Double muc3 = cauHinh.getMuc3();
-            Double muc4 = cauHinh.getMuc4();
+            double muc1 = cauHinh.getMuc1();
+            double muc2 = cauHinh.getMuc2();
+            double muc3 = cauHinh.getMuc3();
+            double muc4 = cauHinh.getMuc4();
             // thong so cac muc
             double chiso1 = cauHinh.getChiSoMuc1();
             double chiso2 = cauHinh.getChiSoMuc2();
             double chiso3 = cauHinh.getChiSoMuc3();
             //
-            Date nTT = hoadon.getNgayThanhLap();
+            Date nTT = hoadon.getNgayThanhToan();
             double tongNuoc = chisoKT - chisoBD;
             //tach so nuoc
             TachSoNuoc(cauHinh, tongNuoc);
@@ -102,7 +93,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
               if(Tieumuc4>0)  dtm.addRow(new Object[]{null,null,null,null,null,null,Tieumuc4,muc4,Tieumuc4*muc4,null});
               dtm.addRow(new Object[]{null,null,null,null,null,null,null,null,null,Tieumuc1*muc1+Tieumuc2*muc2+Tieumuc3*muc3+Tieumuc4*muc4});
         }
-       */
+       
     }
 
     //Tach so nuoc
@@ -183,10 +174,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Ngày bắt đầu", "Ngày kết thúc", "Chỉ số đầu tháng", "Chỉ số cuối tháng", "Ngày thanh toán", "Tổng số nước", "Hạng mục", "Đơn giá", "Thành tiền", "Tổng tiền"

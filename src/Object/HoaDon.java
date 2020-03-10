@@ -17,7 +17,7 @@ public class HoaDon {
     private HoGiaDinh hoGD;
     private CauHinh cauHinh;
     private SoNuoc soNuoc;
-    private Date ngayThanhLap;
+    private Date ngayThanhToan;
 
     public HoaDon() {
     }
@@ -27,7 +27,7 @@ public class HoaDon {
         this.hoGD = hoGD;
         this.cauHinh = cauHinh;
         this.soNuoc = soNuoc;
-        this.ngayThanhLap = ngayThanhLap;
+        this.ngayThanhToan = ngayThanhLap;
     }
 
     public int getIdHoaDon() {
@@ -62,17 +62,17 @@ public class HoaDon {
         this.soNuoc = soNuoc;
     }
 
-    public Date getNgayThanhLap() {
-        return ngayThanhLap;
+    public Date getNgayThanhToan() {
+        return ngayThanhToan;
     }
 
-    public void setNgayThanhLap(Date ngayThanhLap) {
-        this.ngayThanhLap = ngayThanhLap;
+    public void setNgayThanhToan(Date ngayThanhLap) {
+        this.ngayThanhToan= ngayThanhToan;
     }
     
     public Object[] getObject(int order){
         return new Object[]{ 
-            order, this.getHoGD(), this.getCauHinh(), this.getSoNuoc(), this.getNgayThanhLap()
+            order, this.getHoGD(), this.getCauHinh(), this.getSoNuoc(), this.getNgayThanhToan()
         };
     }
 }

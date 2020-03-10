@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Object.CauHinh;
 import Object.HoaDon;
 import java.util.ArrayList;
 
@@ -16,10 +17,12 @@ public class nhap {
     public static void main(String[] args) {
         HoaDonDAO hoaDonDAO = new HoaDonDAO();
         ArrayList<HoaDon> list = new ArrayList<>();
-        list = hoaDonDAO.getListHoaDon();
+        list = hoaDonDAO.getListHoaDon(2);
         System.out.println("size = "+list.size());
         for(HoaDon hd:list){
-            System.out.println("name = "+hd.getIdHoaDon());
+           CauHinh cauHinh = hd.getCauHinh();
+            System.out.println("cau hinh id"+cauHinh.getIdcauhinh());
+            System.out.println("chi so 1 = "+cauHinh.getChiSoMuc1());
         }
     }
 }

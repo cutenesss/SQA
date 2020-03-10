@@ -24,15 +24,16 @@ public class HoaDonDAO extends DAO {
         getInstance();
     }
     
-    public ArrayList<HoaDon> getListHoaDon(){
+    public ArrayList<HoaDon> getListHoaDon(int i){
         ArrayList<HoaDon> listHoaDon = new ArrayList<>();
         String sql = "SELECT qlnuoc.hoadon.idhoadon, qlnuoc.hoadon.idSoNuoc, qlnuoc.hoadon.id_cauHinh, qlnuoc.hoadon.id_ho_GD, qlnuoc.hoadon.ngayThanhToan, qlnuoc.sonuoc.ngayBD, qlnuoc.sonuoc.chiSoBD, qlnuoc.sonuoc.ngayKT, qlnuoc.sonuoc.chiSoKT\n" +
 "FROM qlnuoc.hoadon, qlnuoc.sonuoc, qlnuoc.ho_gia_dinh\n" +
 "where qlnuoc.hoadon.id_ho_GD=qlnuoc.ho_gia_dinh.idHoGD\n" +
-"and qlnuoc.ho_gia_dinh.idHoGD=1\n" +
+"and (qlnuoc.ho_gia_dinh.idHoGD=?)\n" +
 "and qlnuoc.sonuoc.idsoNuoc=qlnuoc.hoadon.idSoNuoc";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, i);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 HoaDon s = new HoaDon();
@@ -40,12 +41,12 @@ public class HoaDonDAO extends DAO {
                 s.setHoGD(new HoGiaDinh());
                 CauHinh c = new CauHinh(rs.getInt("id_cauHinh"));
                 s.setCauHinh(c);
-                s.setNgayThanhLap(rs.getDate("ngayThanhToan"));
+                s.setNgayThanhToan(rs.getDate("ngayThanhToan"));
                 SoNuoc s1 = new SoNuoc();
                 s1.setIdsoNuoc(rs.getInt("idSoNuoc"));
-                s1.setChiSoBD(rs.getFloat("chiSoBD"));
+                s1.setChiSoBD(rs.getDouble("chiSoBD"));
                 s1.setNgayBD(rs.getDate("ngayBD"));
-                s1.setChiSoKT(rs.getFloat("chiSoKT"));
+                s1.setChiSoKT(rs.getDouble("chiSoKT"));
                 s1.setNgayKT(rs.getDate("ngayKT"));
                 s.setSoNuoc(s1);
                 listHoaDon.add(s);
