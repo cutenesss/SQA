@@ -31,12 +31,7 @@ public class SendEmailGD extends javax.swing.JFrame {
 
     public SendEmailGD() {
         initComponents();
-//        Toolkit tk = Toolkit.getDefaultToolkit();
-//        int xsize = (int) tk.getScreenSize().getWidth();
-//        int ysize = (int) tk.getScreenSize().getHeight();
-//        this.setSize(xsize, ysize);
-//        //
-//        jScrollPane2.setSize(xsize, ysize);
+
         setLocationRelativeTo(null);
         model = (DefaultTableModel) tbl_ListCustomer.getModel();
         listHoGD = dao.getListHoGD();
@@ -49,7 +44,7 @@ public class SendEmailGD extends javax.swing.JFrame {
             String diachi = hgd.getDiaChi();
             String maHo = hgd.getMaHoGD();
             String sdt = hgd.getSdt();
-            model.addRow(new Object[]{false, id, ten, email, sdt, 0, 0, 0});
+            model.addRow(new Object[]{false,maHo, ten, email, sdt,diachi});
         }
     }
 
@@ -68,7 +63,6 @@ public class SendEmailGD extends javax.swing.JFrame {
         btn_back = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_ListCustomer = new javax.swing.JTable();
-        btn_gui = new javax.swing.JButton();
         btn_xemhd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,7 +90,7 @@ public class SendEmailGD extends javax.swing.JFrame {
 
             },
             new String [] {
-                "", "ID", "Tên chủ hộ", "Email", "Số điện thoại", "Địa chỉ"
+                "", "Mã Hộ", "Tên chủ hộ", "Email", "Số điện thoại", "Địa chỉ"
             }
         ) {
             Class[] types = new Class [] {
@@ -108,13 +102,6 @@ public class SendEmailGD extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tbl_ListCustomer);
-
-        btn_gui.setText("Gửi");
-        btn_gui.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guiActionPerformed(evt);
-            }
-        });
 
         btn_xemhd.setText("Xem hoá đơn");
         btn_xemhd.addActionListener(new java.awt.event.ActionListener() {
@@ -134,9 +121,7 @@ public class SendEmailGD extends javax.swing.JFrame {
                 .addComponent(cb_dongtien, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
                 .addGap(64, 64, 64)
                 .addComponent(cb_khac, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
-                .addComponent(btn_back)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
@@ -144,8 +129,8 @@ public class SendEmailGD extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addComponent(btn_xemhd)
-                .addGap(38, 38, 38)
-                .addComponent(btn_gui)
+                .addGap(61, 61, 61)
+                .addComponent(btn_back)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -155,14 +140,13 @@ public class SendEmailGD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cb_tatca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cb_dongtien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_khac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cb_khac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_gui)
-                    .addComponent(btn_xemhd))
+                    .addComponent(btn_xemhd)
+                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -175,22 +159,24 @@ public class SendEmailGD extends javax.swing.JFrame {
       
     }//GEN-LAST:event_btn_backActionPerformed
 
-    private void btn_guiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guiActionPerformed
-         allRow = model.getRowCount();// new 
+    private void btn_xemhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xemhdActionPerformed
+          allRow = model.getRowCount();// new 
+          int noSelect = 0;
         for(int i = 0;i<allRow;i++){
            if(model.getValueAt(i,0).equals(true)){
-               HoGiaDinh hgd = listHoGD.get(i);
-               String TO = hgd.getEmail();//dc email nguoi nhan
-               String MESS = "Yêu cầu thanh toán tiền nước tháng: ";
-               MESS+="\n"
-                       +"\n Tên chủ hộ: "+ hgd.getTenChuHo()
-                       +"\n Số điện thoại: "+hgd.getSdt()
-                       +"\n Địa chỉ: "+hgd.getDiaChi();
-               SendMailBySite.send(TO, SUB, MESS, USER, PASS);
+              index = i;
+              this.dispose();
+            new chitietHoadonGD().setVisible(true);
            }
+           else noSelect++;
        }
-       JOptionPane.showMessageDialog(null,"Đã gửi xong!");
-    }//GEN-LAST:event_btn_guiActionPerformed
+//        System.out.println("noselect = "+noSelect+"\n allrow = "+allRow);
+        if(noSelect == allRow){
+            JOptionPane.showMessageDialog(null,"Chọn 1 hộ gia đình để xem chi tiết hoá đơn");
+//            new SendEmailGD().setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btn_xemhdActionPerformed
 
     private void cb_tatcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_tatcaActionPerformed
         allRow = model.getRowCount();
@@ -204,25 +190,6 @@ public class SendEmailGD extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cb_tatcaActionPerformed
-
-    private void btn_xemhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xemhdActionPerformed
-          allRow = model.getRowCount();// new 
-          int noSelect = 0;
-        for(int i = 0;i<allRow;i++){
-           if(model.getValueAt(i,0).equals(true)){
-              index = i;
-              this.dispose();
-            new chitietHoadonGD().setVisible(true);
-           }
-           else noSelect++;
-       }
-        System.out.println("noselect = "+noSelect+"\n allrow = "+allRow);
-        if(noSelect == allRow){
-            JOptionPane.showMessageDialog(null,"Chọn 1 hộ gia đình để xem chi tiết hoá đơn");
-//            new SendEmailGD().setVisible(true);
-        }
-        
-    }//GEN-LAST:event_btn_xemhdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,7 +229,6 @@ public class SendEmailGD extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_gui;
     private javax.swing.JButton btn_xemhd;
     private javax.swing.JCheckBox cb_dongtien;
     private javax.swing.JCheckBox cb_khac;

@@ -30,9 +30,7 @@
               <Component id="cb_dongtien" pref="119" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               <Component id="cb_khac" pref="59" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="btn_back" max="-2" attributes="0"/>
-              <EmptySpace pref="101" max="32767" attributes="0"/>
+              <EmptySpace pref="199" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -42,8 +40,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
               <Component id="btn_xemhd" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="btn_gui" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <Component id="btn_back" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -56,14 +54,13 @@
                   <Component id="cb_tatca" alignment="3" max="32767" attributes="0"/>
                   <Component id="cb_dongtien" alignment="3" max="32767" attributes="0"/>
                   <Component id="cb_khac" alignment="3" max="32767" attributes="0"/>
-                  <Component id="btn_back" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="262" max="32767" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="264" max="32767" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btn_gui" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_xemhd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_back" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -106,7 +103,7 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="0">
                 <Column editable="true" title="" type="java.lang.Boolean"/>
-                <Column editable="true" title="ID" type="java.lang.String"/>
+                <Column editable="true" title="M&#xe3; H&#x1ed9;" type="java.lang.String"/>
                 <Column editable="true" title="T&#xea;n ch&#x1ee7; h&#x1ed9;" type="java.lang.String"/>
                 <Column editable="true" title="Email" type="java.lang.String"/>
                 <Column editable="true" title="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i" type="java.lang.String"/>
@@ -154,14 +151,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btn_gui">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="G&#x1eed;i"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_guiActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btn_xemhd">
       <Properties>
         <Property name="text" type="java.lang.String" value="Xem ho&#xe1; &#x111;&#x1a1;n"/>

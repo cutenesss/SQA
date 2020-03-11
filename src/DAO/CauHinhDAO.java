@@ -21,21 +21,26 @@ public class CauHinhDAO extends DAO {
         getInstance();
     }
     
-    public CauHinh getCauHinh(int i){
-        CauHinh cauHinh = new CauHinh();
+   public ArrayList<CauHinh> getCauHinh(int i){
+        ArrayList<CauHinh> cauHinh = new ArrayList<>();
         String sql = "SELECT * FROM qlnuoc.cauhinh WHERE qlnuoc.cauhinh.idcauhinh = ?";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, i);
             ResultSet rs = ps.executeQuery();
-            CauHinh s = new CauHinh();
-            s.setChiSoMuc1(rs.getDouble("chiSoMuc1"));
-            s.setMuc1(rs.getDouble("muc1"));
-            s.setChiSoMuc2(rs.getDouble("chiSoMuc2"));
-            s.setMuc2(rs.getDouble("muc2"));
-            s.setChiSoMuc3(rs.getDouble("chiSoMuc3"));
-            s.setMuc3(rs.getDouble("muc3"));
-            s.setMuc4(rs.getDouble("muc4"));
+            while(rs.next()){
+                CauHinh s = new CauHinh();
+                s.setIdcauhinh(rs.getInt("idcauhinh"));
+                s.setChiSoMuc1(rs.getDouble("chiSoMuc1"));
+                s.setMuc1(rs.getDouble("muc1"));
+                s.setChiSoMuc2(rs.getDouble("chiSoMuc2"));
+                s.setMuc2(rs.getDouble("muc2"));
+                s.setChiSoMuc3(rs.getDouble("chiSoMuc3"));
+                s.setMuc3(rs.getDouble("muc3"));
+                s.setMuc4(rs.getDouble("muc4")); 
+//                s.setNgayApDung(rs.getDate("ngayNhap"));
+                cauHinh.add(s);
+            }
         } catch(SQLException e){ 
             e.printStackTrace();
         }

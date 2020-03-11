@@ -33,13 +33,28 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     public static int index = -1;
     DefaultTableModel dtm;
     public static ArrayList<HoaDon> listHoaDon;
-    public static CauHinh cauHinh;
+    public static ArrayList<CauHinh> ListcauHinh;
     public static HoaDon hoadon;
     public static HoGiaDinh hgd;
-    public static double Tieumuc1 = 0;
+    public static SoNuoc soNuoc;
+    public static double Tieumuc1 = 0;// cac muc tieu thu
     public static double Tieumuc2 = 0;
     public static double Tieumuc3 = 0;
     public static double Tieumuc4 = 0;
+    public static double muc1 = 0;// cac muc gia tien nuoc
+    public static double muc2 = 0;
+    public static double muc3 = 0;
+    public static double muc4 = 0;
+    public static double chiso1 = 0;// cac muc trong thang do so nuoc
+    public static double chiso2 = 0;
+    public static double chiso3 = 0;
+    public static double chisoBD = 0;
+    public static double chisoKT = 0;
+    public static double tongNuoc = 0;
+    public static double tien = 0;
+    public static Date nTT;//ngay thanh toan
+    public static Date nbd;
+    public static Date nkt;
 
     public chitietHoadonGD() {
         initComponents();
@@ -54,60 +69,72 @@ public class chitietHoadonGD extends javax.swing.JFrame {
         edt_maho.setText(hgd.getMaHoGD());
         edt_sdt.setText(hgd.getSdt());
         edt_email.setText(hgd.getEmail());
-        // luu het cac file lai di
+        khoitao();
+
+    }
+
+    //Tach so nuoc
+    public void khoitao() {
         HoaDonDAO st = new HoaDonDAO();
         listHoaDon = st.getListHoaDon(hgd.getIdHoGD());
-         System.out.println("size1 = "+listHoaDon.size());
+//         System.out.println("size1 = "+listHoaDon.size());
         CauHinhDAO st2 = new CauHinhDAO();
         //
         hoadon = new HoaDon();
 
-       if(!listHoaDon.isEmpty()) hoadon = listHoaDon.get(listHoaDon.size() - 1);
-       
+        if (!listHoaDon.isEmpty()) {
+            hoadon = listHoaDon.get(listHoaDon.size() - 1);
+        }
+
         if (hoadon != null) {
-            SoNuoc soNuoc = hoadon.getSoNuoc();
-            CauHinh cauHinh = hoadon.getCauHinh();
-            Date nbd = soNuoc.getNgayBD();
-            Date nkt = soNuoc.getNgayKT();
-            Double chisoBD = soNuoc.getChiSoBD();
-            Double chisoKT = soNuoc.getChiSoKT();
+            soNuoc = hoadon.getSoNuoc();
+            ListcauHinh = st2.getCauHinh(hoadon.getCauHinh().getIdcauhinh());
+            nbd = soNuoc.getNgayBD();
+            nkt = soNuoc.getNgayKT();
+            chisoBD = soNuoc.getChiSoBD();
+            chisoKT = soNuoc.getChiSoKT();
             // so tien tung muc
-            double muc1 = cauHinh.getMuc1();
-            double muc2 = cauHinh.getMuc2();
-            double muc3 = cauHinh.getMuc3();
-            double muc4 = cauHinh.getMuc4();
+            CauHinh cauHinh = ListcauHinh.get(0);
+            muc1 = cauHinh.getMuc1();
+            muc2 = cauHinh.getMuc2();
+            muc3 = cauHinh.getMuc3();
+            muc4 = cauHinh.getMuc4();
             // thong so cac muc
-            double chiso1 = cauHinh.getChiSoMuc1();
-            double chiso2 = cauHinh.getChiSoMuc2();
-            double chiso3 = cauHinh.getChiSoMuc3();
+            chiso1 = cauHinh.getChiSoMuc1();
+            chiso2 = cauHinh.getChiSoMuc2();
+            chiso3 = cauHinh.getChiSoMuc3();
             //
-            Date nTT = hoadon.getNgayThanhToan();
-            double tongNuoc = chisoKT - chisoBD;
+            nTT = hoadon.getNgayThanhToan();
+            tongNuoc = chisoKT - chisoBD;
             //tach so nuoc
             TachSoNuoc(cauHinh, tongNuoc);
-            double tien = tinh(cauHinh, tongNuoc);
+            tien = tinh(cauHinh, tongNuoc);
+            System.out.println("tien = "+tien);
             // set vao cac cot
-            dtm.addRow(new Object[]{nbd, nkt, chisoBD, chisoKT, nTT, tongNuoc,Tieumuc1,muc1,Tieumuc1*muc1,null});
-            if(Tieumuc2>0)  dtm.addRow(new Object[]{null,null,null,null,null,null,Tieumuc2,muc2,Tieumuc2*muc2,null});
-             if(Tieumuc3>0)  dtm.addRow(new Object[]{null,null,null,null,null,null,Tieumuc3,muc3,Tieumuc3*muc3,null});
-              if(Tieumuc4>0)  dtm.addRow(new Object[]{null,null,null,null,null,null,Tieumuc4,muc4,Tieumuc4*muc4,null});
-              dtm.addRow(new Object[]{null,null,null,null,null,null,null,null,null,Tieumuc1*muc1+Tieumuc2*muc2+Tieumuc3*muc3+Tieumuc4*muc4});
+            dtm.addRow(new Object[]{nbd, nkt, chisoBD, chisoKT, nTT, tongNuoc, Tieumuc1, muc1, Tieumuc1 * muc1, null});
+            if (Tieumuc2 > 0) {
+                dtm.addRow(new Object[]{null, null, null, null, null, null, Tieumuc2, muc2, Tieumuc2 * muc2, null});
+            }
+            if (Tieumuc3 > 0) {
+                dtm.addRow(new Object[]{null, null, null, null, null, null, Tieumuc3, muc3, Tieumuc3 * muc3, null});
+            }
+            if (Tieumuc4 > 0) {
+                dtm.addRow(new Object[]{null, null, null, null, null, null, Tieumuc4, muc4, Tieumuc4 * muc4, null});
+            }
+            dtm.addRow(new Object[]{null, null, null, null, null, null, null, null, null,tien});
         }
-       
     }
-
-    //Tach so nuoc
 
     public static void TachSoNuoc(CauHinh c, double a) {
         if (a <= c.getChiSoMuc1()) {
             Tieumuc1 = a;
-        } else if (a <= c.getChiSoMuc2()) {
+        } else if (a - c.getChiSoMuc1() <= c.getChiSoMuc2()) {
             Tieumuc1 = c.getChiSoMuc1();
-            Tieumuc2 = c.getChiSoMuc2() - a;
-        } else if (a <= c.getChiSoMuc3()) {
+            Tieumuc2 = a - c.getChiSoMuc1();
+        } else if (a - c.getChiSoMuc1() - c.getChiSoMuc2() <= c.getChiSoMuc3()) {
             Tieumuc1 = c.getChiSoMuc1();
             Tieumuc2 = c.getChiSoMuc2();
-            Tieumuc3 = c.getChiSoMuc3() - a;
+            Tieumuc3 = a - c.getChiSoMuc2();
         } else {
             Tieumuc1 = c.getChiSoMuc1();
             Tieumuc2 = c.getChiSoMuc2();
@@ -117,7 +144,6 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     }
 
     // tính tien nuoc
-
     public static double tinh(CauHinh c, double a) {
         if (a <= c.getChiSoMuc1()) {
             return a * c.getMuc1();
@@ -181,7 +207,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -223,7 +249,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -247,7 +273,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(edt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,12 +295,12 @@ public class chitietHoadonGD extends javax.swing.JFrame {
                     .addComponent(edt_diachi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edt_maho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_back)
                     .addComponent(btn_send))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -290,15 +316,24 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
-//        HoGiaDinh hgd = listHoGD.get(i);
-//        String TO = hgd.getEmail();//dc email nguoi nhan
-//        String MESS = "Yêu cầu thanh toán tiền nước tháng: ";
-//        MESS += "\n"
-//                + "\n Tên chủ hộ: " + hgd.getTenChuHo()
-//                + "\n Số điện thoại: " + hgd.getSdt()
-//                + "\n Địa chỉ: " + hgd.getDiaChi();
-//        SendMailBySite.send(TO, SUB, MESS, USER, PASS);
-//        JOptionPane.showMessageDialog(null, "Đã gửi xong!");
+
+        String TO = hgd.getEmail();//dc email nguoi nhan
+        String MESS = "Yêu cầu thanh toán tiền nước trước ngày: "+nTT;
+        MESS += "\n"
+                + "\n Tên chủ hộ: " + hgd.getTenChuHo()
+                + "\n Số điện thoại: " + hgd.getSdt()
+                + "\n Địa chỉ: " + hgd.getDiaChi();
+     MESS+="\n\n"
+             +" Chỉ số nước kì trước(ngày: "+nbd+"): "+chisoBD+"\t chỉ số nước kì này(ngày: "+nkt+"): "+chisoKT
+             +"\n Các mức chi tiết:"
+             +"\n Mức 1: "+Tieumuc1+"\t Đơn giá: "+muc1+"\t Tiền mức 1 = "+Tieumuc1*muc1
+              +"\n Mức 2: "+Tieumuc2+"\t Đơn giá: "+muc2+"\t Tiền mức 2 = "+Tieumuc2*muc2
+              +"\n Mức 3: "+Tieumuc3+"\t Đơn giá: "+muc3+"\t Tiền mức 3 = "+Tieumuc3*muc3
+              +"\n Mức 4: "+Tieumuc4+"\t Đơn giá: "+muc4+"\t Tiền mức 4 = "+Tieumuc4*muc4
+             +"\nTổng số nước đã tiêu thụ: "+tongNuoc
+             +"\nTổng tiền: "+tien;
+        SendMailBySite.send(TO, SUB, MESS, USER, PASS);
+        JOptionPane.showMessageDialog(null, "Đã gửi xong!");
     }//GEN-LAST:event_btn_sendActionPerformed
 
     /**
