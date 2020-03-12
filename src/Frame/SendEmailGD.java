@@ -8,11 +8,20 @@ package Frame;
 import Controller.SendMailBySite;
 import DAO.HoGDDAO;
 import Object.HoGiaDinh;
+import java.awt.Component;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -22,10 +31,12 @@ public class SendEmailGD extends javax.swing.JFrame {
     public static int index = -1;
     public static HoGDDAO dao = new HoGDDAO();
     public static ArrayList<HoGiaDinh> listHoGD;
-    public static String USER = "hoanv.ptit@gmail.com";
-    public static String PASS = "hyh@114141";
-    public static String SUB = "Yeu cau thanh toan tien nuoc";
+//    public static HoGiaDinh hogd;
+    public static String USER = "email của người gửi";
+    public static String PASS = "mật khẩu email";
+    public static String SUB = "Yêu cầu thanh toán tiền nước:";
     private int allRow;
+    public boolean isPushed;
     Calendar calendar;
     DefaultTableModel model;
 
@@ -35,6 +46,8 @@ public class SendEmailGD extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         model = (DefaultTableModel) tbl_ListCustomer.getModel();
         listHoGD = dao.getListHoGD();
+          tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
+         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellEditor(new SendEmailGD.ButtonEditor(new JCheckBox()));
         //
 //        calendar = new Calendar();
         for (HoGiaDinh hgd : listHoGD) {
@@ -44,10 +57,81 @@ public class SendEmailGD extends javax.swing.JFrame {
             String diachi = hgd.getDiaChi();
             String maHo = hgd.getMaHoGD();
             String sdt = hgd.getSdt();
-            model.addRow(new Object[]{false,maHo, ten, email, sdt,diachi});
+            model.addRow(new Object[]{maHo, ten, email, sdt,diachi});
+        }
+    }
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "Xen hoá đơn" : value.toString());
+            return this;
         }
     }
 
+    class ButtonEditor extends DefaultCellEditor {
+
+        protected JButton button;
+        private String label;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+//           hogd = new HoGiaDinh();
+//            result = listHoaDon.get(row).getCauHinh();
+            index = listHoGD.get(row).getIdHoGD();
+            label = (value == null) ? "Xen hoá đơn" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                chitietHoadonGD dsf = new chitietHoadonGD();
+                dsf.taobang(index);
+                dsf.setVisible(true);
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,26 +141,12 @@ public class SendEmailGD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cb_tatca = new javax.swing.JCheckBox();
-        cb_dongtien = new javax.swing.JCheckBox();
-        cb_khac = new javax.swing.JCheckBox();
         btn_back = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_ListCustomer = new javax.swing.JTable();
-        btn_xemhd = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        cb_tatca.setText("Chọn tất cả");
-        cb_tatca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_tatcaActionPerformed(evt);
-            }
-        });
-
-        cb_dongtien.setText("Yêu cầu đóng tiền");
-
-        cb_khac.setText("Khác");
 
         btn_back.setText("Quay lại");
         btn_back.addActionListener(new java.awt.event.ActionListener() {
@@ -90,11 +160,11 @@ public class SendEmailGD extends javax.swing.JFrame {
 
             },
             new String [] {
-                "", "Mã Hộ", "Tên chủ hộ", "Email", "Số điện thoại", "Địa chỉ"
+                "Mã Hộ", "Tên chủ hộ", "Email", "Số điện thoại", "Địa chỉ", "Xem Hoá Đơn"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -103,10 +173,10 @@ public class SendEmailGD extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tbl_ListCustomer);
 
-        btn_xemhd.setText("Xem hoá đơn");
-        btn_xemhd.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Thoát");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_xemhdActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -114,40 +184,27 @@ public class SendEmailGD extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(cb_tatca, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                .addGap(69, 69, 69)
-                .addComponent(cb_dongtien, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                .addGap(64, 64, 64)
-                .addComponent(cb_khac, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                .addContainerGap(199, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addComponent(btn_xemhd)
-                .addGap(61, 61, 61)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(110, 110, 110)
                 .addComponent(btn_back)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(254, 254, 254))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cb_tatca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_dongtien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_khac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(75, 75, 75)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_xemhd)
-                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -159,37 +216,9 @@ public class SendEmailGD extends javax.swing.JFrame {
       
     }//GEN-LAST:event_btn_backActionPerformed
 
-    private void btn_xemhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xemhdActionPerformed
-          allRow = model.getRowCount();// new 
-          int noSelect = 0;
-        for(int i = 0;i<allRow;i++){
-           if(model.getValueAt(i,0).equals(true)){
-              index = i;
-              this.dispose();
-            new chitietHoadonGD().setVisible(true);
-           }
-           else noSelect++;
-       }
-//        System.out.println("noselect = "+noSelect+"\n allrow = "+allRow);
-        if(noSelect == allRow){
-            JOptionPane.showMessageDialog(null,"Chọn 1 hộ gia đình để xem chi tiết hoá đơn");
-//            new SendEmailGD().setVisible(true);
-        }
-        
-    }//GEN-LAST:event_btn_xemhdActionPerformed
-
-    private void cb_tatcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_tatcaActionPerformed
-        allRow = model.getRowCount();
-        if(cb_tatca.isSelected()){
-            for(int i = 0;i<allRow;i++){
-                model.setValueAt(true,i,0);
-            }
-        }else{
-            for(int i = 0;i<allRow;i++){
-                model.setValueAt(false,i,0);
-            }
-        }
-    }//GEN-LAST:event_cb_tatcaActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,10 +258,7 @@ public class SendEmailGD extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_xemhd;
-    private javax.swing.JCheckBox cb_dongtien;
-    private javax.swing.JCheckBox cb_khac;
-    private javax.swing.JCheckBox cb_tatca;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_ListCustomer;
     // End of variables declaration//GEN-END:variables

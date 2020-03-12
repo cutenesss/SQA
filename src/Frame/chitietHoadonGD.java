@@ -30,7 +30,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     /**
      * Creates new form DetailHoGD
      */
-    public static int index = -1;
+    public static int index = -1;// id ho gia dinh
     DefaultTableModel dtm;
     public static ArrayList<HoaDon> listHoaDon;
     public static ArrayList<CauHinh> ListcauHinh;
@@ -60,24 +60,31 @@ public class chitietHoadonGD extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         dtm = (DefaultTableModel) jTable1.getModel();
-        index = SendEmailGD.index;
-        if (index > -1) {
-            hgd = SendEmailGD.listHoGD.get(index);
+        hgd = new HoGiaDinh();
+        index = SendEmailGD.index;// id ho gia dinh
+        for(HoGiaDinh h:SendEmailGD.listHoGD){
+            if(h.getIdHoGD() == index){
+                hgd.setTenChuHo(h.getTenChuHo());
+                hgd.setEmail(h.getEmail());
+                hgd.setSdt(h.getSdt());
+                hgd.setDiaChi(h.getDiaChi());
+                hgd.setMaHoGD(h.getMaHoGD());
+            }
+          
         }
-        edt_tenchuho.setText(hgd.getTenChuHo());
+        if(hgd!= null){
+            edt_tenchuho.setText(hgd.getTenChuHo());
         edt_diachi.setText(hgd.getDiaChi());
         edt_maho.setText(hgd.getMaHoGD());
         edt_sdt.setText(hgd.getSdt());
         edt_email.setText(hgd.getEmail());
-        khoitao();
-
+        }
     }
 
     //Tach so nuoc
-    public void khoitao() {
+    public void taobang(int index) {
         HoaDonDAO st = new HoaDonDAO();
-        listHoaDon = st.getListHoaDon(hgd.getIdHoGD());
-//         System.out.println("size1 = "+listHoaDon.size());
+        listHoaDon = st.getListHoaDon(index);
         CauHinhDAO st2 = new CauHinhDAO();
         //
         hoadon = new HoaDon();
@@ -124,7 +131,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             dtm.addRow(new Object[]{null, null, null, null, null, null, null, null, null,tien});
         }
     }
-
+    
     public static void TachSoNuoc(CauHinh c, double a) {
         if (a <= c.getChiSoMuc1()) {
             Tieumuc1 = a;
@@ -389,4 +396,6 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+   
 }
