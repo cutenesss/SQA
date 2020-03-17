@@ -5,11 +5,9 @@
  */
 package Frame;
 
-import Controller.SendMailBySite;
 import DAO.HoGDDAO;
 import Object.HoGiaDinh;
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ import java.util.Calendar;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
@@ -31,11 +28,9 @@ public class SendEmailGD extends javax.swing.JFrame {
     public static int index = -1;
     public static HoGDDAO dao = new HoGDDAO();
     public static ArrayList<HoGiaDinh> listHoGD;
-//    public static HoGiaDinh hogd;
-    public static String USER = "email của người gửi";
-    public static String PASS = "mật khẩu email";
+    public static String USER = "cloneforfun1998@gmail.com";
+    public static String PASS = "S2YoshinoS2";
     public static String SUB = "Yêu cầu thanh toán tiền nước:";
-    private int allRow;
     public boolean isPushed;
     Calendar calendar;
     DefaultTableModel model;
@@ -46,12 +41,9 @@ public class SendEmailGD extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         model = (DefaultTableModel) tbl_ListCustomer.getModel();
         listHoGD = dao.getListHoGD();
-          tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
+         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
          tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellEditor(new SendEmailGD.ButtonEditor(new JCheckBox()));
-        //
-//        calendar = new Calendar();
         for (HoGiaDinh hgd : listHoGD) {
-            int id = hgd.getIdHoGD();
             String ten = hgd.getTenChuHo();
             String email = hgd.getEmail();
             String diachi = hgd.getDiaChi();
@@ -74,7 +66,7 @@ public class SendEmailGD extends javax.swing.JFrame {
                 setForeground(table.getForeground());
                 setBackground(UIManager.getColor("Button.background"));
             }
-            setText((value == null) ? "Xen hoá đơn" : value.toString());
+            setText((value == null) ? "Xem chi tiết hoá đơn" : value.toString());
             return this;
         }
     }
@@ -106,10 +98,8 @@ public class SendEmailGD extends javax.swing.JFrame {
                 button.setForeground(table.getForeground());
                 button.setBackground(table.getBackground());
             }
-//           hogd = new HoGiaDinh();
-//            result = listHoaDon.get(row).getCauHinh();
             index = listHoGD.get(row).getIdHoGD();
-            label = (value == null) ? "Xen hoá đơn" : value.toString();
+            label = (value == null) ? "Xem chi tiết hoá đơn" : value.toString();
             button.setText(label);
             isPushed = true;
             return button;
