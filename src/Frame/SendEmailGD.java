@@ -32,8 +32,8 @@ public class SendEmailGD extends javax.swing.JFrame {
     public static HoGDDAO dao = new HoGDDAO();
     public static ArrayList<HoGiaDinh> listHoGD;
 //    public static HoGiaDinh hogd;
-    public static String USER = "email của người gửi";
-    public static String PASS = "mật khẩu email";
+    public static String USER = "cloneforfun1998@gmail.com\n";
+    public static String PASS = "S2YoshinoS2";
     public static String SUB = "Yêu cầu thanh toán tiền nước:";
     private int allRow;
     public boolean isPushed;
