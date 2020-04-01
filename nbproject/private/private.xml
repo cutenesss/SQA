@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Frame/chitietHoadonGD.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Frame/SendEmailGD.java</file>
+            <file>file:/D:/netbeans%20workspace/SQA/src/Frame/BaoCao.java</file>
             <file>file:/D:/netbeans%20workspace/SQA/src/Frame/DetailHoGD.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Object/HoaDon.java</file>
+            <file>file:/D:/netbeans%20workspace/SQA/src/DAO/HoaDonDAO.java</file>
             <file>file:/D:/netbeans%20workspace/SQA/src/Object/CauHinh.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/DAO/DAO.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/DAO/CauHinhDAO.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Frame/DanhSachHoGD.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Frame/Menu.java</file>
-            <file>file:/D:/netbeans%20workspace/SQA/src/Controller/SendMailBySite.java</file>
         </group>
     </open-files>
 </project-private>

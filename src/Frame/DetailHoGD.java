@@ -7,8 +7,6 @@ package Frame;
 
 import DAO.CauHinhDAO;
 import DAO.HoaDonDAO;
-import static Frame.DanhSachHoGD.listHoGD;
-import static Frame.DanhSachHoGD.result;
 import Object.CauHinh;
 import Object.HoGiaDinh;
 import Object.HoaDon;
