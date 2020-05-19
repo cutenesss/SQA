@@ -82,4 +82,5 @@ public class HoGiaDinh {
             order, this.getTenChuHo(), this.getDiaChi(), this.getSdt(), this.getMaHoGD(),this.getEmail()
         };
     }
+    
 }

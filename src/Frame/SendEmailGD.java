@@ -44,15 +44,19 @@ public class SendEmailGD extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         model = (DefaultTableModel) tbl_ListCustomer.getModel();
         listHoGD = dao.getListHoGD();
-         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
-         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellEditor(new SendEmailGD.ButtonEditor(new JCheckBox()));
-        for (HoGiaDinh hgd : listHoGD) {
-            String ten = hgd.getTenChuHo().toString();
-            String email = hgd.getEmail();
-            String diachi = hgd.getDiaChi().toString();
-            String maHo = hgd.getMaHoGD();
-            String sdt = hgd.getSdt();
-            model.addRow(new Object[]{maHo, ten, email, sdt,diachi});
+         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new ButtonRenderer());
+         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellEditor(new ButtonEditor(new JCheckBox()));
+         if (listHoGD.size() != 0) {
+            //hiển thị danh sách tất cả hộ gia đình
+            for (int i = 0; i < listHoGD.size(); i++) {
+                model.addRow(listHoGD.get(i).getObject1(i + 1));
+            }
+        } else {
+             JOptionPane.showMessageDialog(null,"Không có dữ liệu");
+            HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
+//            for (int i = 0; i < 3; i++) {
+//                model.addRow(s.getObject1(0));
+//            }
         }
     }
     class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -114,7 +118,9 @@ public class SendEmailGD extends javax.swing.JFrame {
                 chitietHoadonGD dsf = new chitietHoadonGD();
                 dsf.taobang(index);
                 dsf.setVisible(true);
+                
             }
+            dispose();
             isPushed = false;
             return label;
         }
@@ -156,17 +162,9 @@ public class SendEmailGD extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã Hộ", "Tên chủ hộ", "Email", "Số điện thoại", "Địa chỉ", "Xem Hoá Đơn"
+                "STT", "Tên chủ hộ", "Địa chỉ", "Số điện thoại", "Mã Hộ", "Email", "Xem Hoá Đơn"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane2.setViewportView(tbl_ListCustomer);
 
         jButton1.setText("Thoát");
@@ -178,7 +176,7 @@ public class SendEmailGD extends javax.swing.JFrame {
 
         jLabel1.setText("Danh sách hộ gia đình");
 
-        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất  cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa" }));
+        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa" }));
         Quan_selected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Quan_selectedActionPerformed(evt);
@@ -244,10 +242,9 @@ public class SendEmailGD extends javax.swing.JFrame {
         // hiển thị danh sách hộ gia đình theo quận
         Quan = Quan_selected.getSelectedItem().toString().trim();
         // nếu chọn tất cả
-        listHoGD = dao.getListHoGD();
+//        listHoGD = dao.getListHoGD();
         if (listHoGD.size() != 0) {
             if (Quan.equals("Tất cả")) {
-                System.out.println("trong combo box tất cả");
                 model.setRowCount(0);
                 for (int i = 0; i < listHoGD.size(); i++) {
                     model.addRow(listHoGD.get(i).getObject1(i + 1));
@@ -263,9 +260,9 @@ public class SendEmailGD extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null,"Không có dữ liệu");
                     HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
                     model.setRowCount(0);
-                    for (int i = 0; i < 3; i++) {
-                        model.addRow(s.getObject1(0));
-                    }
+//                    for (int i = 0; i < 3; i++) {
+//                        model.addRow(s.getObject1(0));
+//                    }
                 }
             }
 
@@ -273,9 +270,9 @@ public class SendEmailGD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Không có dữ liệu");
             HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
             model.setRowCount(0);
-            for (int i = 0; i < 3; i++) {
-                model.addRow(s.getObject1(0));
-            }
+//            for (int i = 0; i < 3; i++) {
+//                model.addRow(s.getObject1(0));
+//            }
         }
     }//GEN-LAST:event_Quan_selectedActionPerformed
 

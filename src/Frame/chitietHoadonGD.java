@@ -74,10 +74,15 @@ public class chitietHoadonGD extends javax.swing.JFrame {
         }
         if(hgd!= null){
             edt_tenchuho.setText(hgd.getTenChuHo().toString());
+            edt_tenchuho.setEditable(false);
         edt_diachi.setText(hgd.getDiaChi().toString());
+        edt_diachi.setEditable(false);
         edt_maho.setText(hgd.getMaHoGD());
+        edt_maho.setEditable(false);
         edt_sdt.setText(hgd.getSdt());
+        edt_sdt.setEditable(false);
         edt_email.setText(hgd.getEmail());
+        edt_email.setEditable(false);
         }
     }
 

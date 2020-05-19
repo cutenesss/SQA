@@ -51,9 +51,9 @@ public class DanhSachHoGD extends javax.swing.JFrame {
         } else {
              JOptionPane.showMessageDialog(null,"Không có dữ liệu");
             HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
-            for (int i = 0; i < 3; i++) {
-                dtm.addRow(s.getObject1(0));
-            }
+//            for (int i = 0; i < 3; i++) {
+//                dtm.addRow(s.getObject1(0));
+//            }
         }
     }
 
@@ -257,9 +257,9 @@ public class DanhSachHoGD extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null,"Không có dữ liệu");
                     HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
                     dtm.setRowCount(0);
-                    for (int i = 0; i < 3; i++) {
-                        dtm.addRow(s.getObject1(0));
-                    }
+//                    for (int i = 0; i < 3; i++) {
+//                        dtm.addRow(s.getObject1(0));
+//                    }
                 }
             }
 
@@ -267,9 +267,9 @@ public class DanhSachHoGD extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Không có dữ liệu");
             HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
             dtm.setRowCount(0);
-            for (int i = 0; i < 3; i++) {
-                dtm.addRow(s.getObject1(0));
-            }
+//            for (int i = 0; i < 3; i++) {
+//                dtm.addRow(s.getObject1(0));
+//            }
         }
     }//GEN-LAST:event_Quan_selectedActionPerformed
 

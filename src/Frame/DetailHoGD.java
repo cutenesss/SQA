@@ -42,6 +42,11 @@ public class DetailHoGD extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         dtm = (DefaultTableModel) jTable1.getModel();
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
         jTextField1.setText(DanhSachHoGD.getHoGD().getTenChuHo().toString());
         jTextField2.setText(DanhSachHoGD.getHoGD().getDiaChi().toString());
         jTextField3.setText(DanhSachHoGD.getHoGD().getMaHoGD());
