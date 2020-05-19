@@ -5,11 +5,9 @@
  */
 package Frame;
 
-import Controller.SendMailBySite;
 import DAO.HoGDDAO;
 import Object.HoGiaDinh;
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,12 +29,12 @@ public class SendEmailGD extends javax.swing.JFrame {
     public static int index = -1;
     public static HoGDDAO dao = new HoGDDAO();
     public static ArrayList<HoGiaDinh> listHoGD;
-//    public static HoGiaDinh hogd;
-    public static String USER = "cloneforfun1998@gmail.com\n";
+    public static HoGiaDinh hogd;
+    public static String USER = "cloneforfun1998@gmail.com";
     public static String PASS = "S2YoshinoS2";
     public static String SUB = "Yêu cầu thanh toán tiền nước:";
-    private int allRow;
     public boolean isPushed;
+    private String Quan = "Tất cả";
     Calendar calendar;
     DefaultTableModel model;
 
@@ -46,15 +44,12 @@ public class SendEmailGD extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         model = (DefaultTableModel) tbl_ListCustomer.getModel();
         listHoGD = dao.getListHoGD();
-          tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
+         tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellRenderer(new SendEmailGD.ButtonRenderer());
          tbl_ListCustomer.getColumn("Xem Hoá Đơn").setCellEditor(new SendEmailGD.ButtonEditor(new JCheckBox()));
-        //
-//        calendar = new Calendar();
         for (HoGiaDinh hgd : listHoGD) {
-            int id = hgd.getIdHoGD();
-            String ten = hgd.getTenChuHo();
+            String ten = hgd.getTenChuHo().toString();
             String email = hgd.getEmail();
-            String diachi = hgd.getDiaChi();
+            String diachi = hgd.getDiaChi().toString();
             String maHo = hgd.getMaHoGD();
             String sdt = hgd.getSdt();
             model.addRow(new Object[]{maHo, ten, email, sdt,diachi});
@@ -74,7 +69,7 @@ public class SendEmailGD extends javax.swing.JFrame {
                 setForeground(table.getForeground());
                 setBackground(UIManager.getColor("Button.background"));
             }
-            setText((value == null) ? "Xen hoá đơn" : value.toString());
+            setText((value == null) ? "Xem chi tiết hoá đơn" : value.toString());
             return this;
         }
     }
@@ -106,10 +101,8 @@ public class SendEmailGD extends javax.swing.JFrame {
                 button.setForeground(table.getForeground());
                 button.setBackground(table.getBackground());
             }
-//           hogd = new HoGiaDinh();
-//            result = listHoaDon.get(row).getCauHinh();
             index = listHoGD.get(row).getIdHoGD();
-            label = (value == null) ? "Xen hoá đơn" : value.toString();
+            label = (value == null) ? "Xem chi tiết hoá đơn" : value.toString();
             button.setText(label);
             isPushed = true;
             return button;
@@ -145,6 +138,9 @@ public class SendEmailGD extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_ListCustomer = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Quan_selected = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,31 +176,56 @@ public class SendEmailGD extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Danh sách hộ gia đình");
+
+        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất  cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa" }));
+        Quan_selected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Quan_selectedActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Quận");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(39, 39, 39)
+                        .addComponent(Quan_selected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(202, 202, 202))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_back)
+                        .addGap(58, 58, 58)
+                        .addComponent(jButton1)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(110, 110, 110)
-                .addComponent(btn_back)
-                .addGap(254, 254, 254))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(Quan_selected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_back)
                     .addComponent(jButton1))
-                .addGap(17, 17, 17))
+                .addContainerGap())
         );
 
         pack();
@@ -213,12 +234,50 @@ public class SendEmailGD extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
          this.dispose();
          new Menu().setVisible(true);
-      
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void Quan_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Quan_selectedActionPerformed
+        // hiển thị danh sách hộ gia đình theo quận
+        Quan = Quan_selected.getSelectedItem().toString().trim();
+        // nếu chọn tất cả
+        listHoGD = dao.getListHoGD();
+        if (listHoGD.size() != 0) {
+            if (Quan.equals("Tất cả")) {
+                System.out.println("trong combo box tất cả");
+                model.setRowCount(0);
+                for (int i = 0; i < listHoGD.size(); i++) {
+                    model.addRow(listHoGD.get(i).getObject1(i + 1));
+                }
+            } else {// hiển thị dánh sách hộ gia đình theo quận
+                ArrayList<HoGiaDinh> listHGD = dao.getListHoGDByDistrict(Quan);
+                if (listHGD.size() != 0) {
+                    model.setRowCount(0);
+                    for (int i = 0; i < listHGD.size(); i++) {
+                        model.addRow(listHGD.get(i).getObject1(i + 1));
+                    }
+                } else {
+                     JOptionPane.showMessageDialog(null,"Không có dữ liệu");
+                    HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
+                    model.setRowCount(0);
+                    for (int i = 0; i < 3; i++) {
+                        model.addRow(s.getObject1(0));
+                    }
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null,"Không có dữ liệu");
+            HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
+            model.setRowCount(0);
+            for (int i = 0; i < 3; i++) {
+                model.addRow(s.getObject1(0));
+            }
+        }
+    }//GEN-LAST:event_Quan_selectedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,8 +316,11 @@ public class SendEmailGD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox Quan_selected;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_ListCustomer;
     // End of variables declaration//GEN-END:variables

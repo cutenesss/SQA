@@ -11,8 +11,8 @@ package Object;
  */
 public class HoGiaDinh {
     private int idHoGD;
-    private String tenChuHo;
-    private String diaChi;
+    private HoTen tenChuHo;
+    private DiaChi diaChi;
     private String sdt;
     private String maHoGD;
     private String email;
@@ -20,7 +20,7 @@ public class HoGiaDinh {
     public HoGiaDinh() {
     }
 
-    public HoGiaDinh(int idHoGD, String tenChuHo, String diaChi, String sdt, String maHoGD, String email) {
+    public HoGiaDinh(int idHoGD, HoTen tenChuHo, DiaChi diaChi, String sdt, String maHoGD, String email) {
         this.idHoGD = idHoGD;
         this.tenChuHo = tenChuHo;
         this.diaChi = diaChi;
@@ -37,19 +37,19 @@ public class HoGiaDinh {
         this.idHoGD = idHoGD;
     }
 
-    public String getTenChuHo() {
+    public HoTen getTenChuHo() {
         return tenChuHo;
     }
 
-    public void setTenChuHo(String tenChuHo) {
+    public void setTenChuHo(HoTen tenChuHo) {
         this.tenChuHo = tenChuHo;
     }
 
-    public String getDiaChi() {
+    public DiaChi getDiaChi() {
         return diaChi;
     }
 
-    public void setDiaChi(String diaChi) {
+    public void setDiaChi(DiaChi diaChi) {
         this.diaChi = diaChi;
     }
 

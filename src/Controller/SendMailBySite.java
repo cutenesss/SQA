@@ -52,13 +52,10 @@ public class SendMailBySite
             
         } catch (MessagingException e) 
         {
-            JOptionPane.showMessageDialog(null,"Something happened!");
+            JOptionPane.showMessageDialog(null,"Có lỗi xảy ra!");
             
             throw new RuntimeException(e);
         }
         
     }
-
-//    public static void send(String TO, String SUB, String MESS, String USER, String PASS) {
-//    }
 }

@@ -19,11 +19,11 @@ public class DAO {
     
     public static void getInstance(){
         if( con == null){
-            String dbUrl = "jdbc:mysql://localhost:3306/qlnuoc";
+//            String dbUrl = "jdbc:mysql://localhost:3306/qlnuoc";
             String dbDriver = "com.mysql.jdbc.Driver";
             try{
                 Class.forName(dbDriver);
-//                con = DriverManager.getConnection(dbUrl,"root","123");
+//              con = DriverManager.getConnection(dbUrl,"root","123");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qlnuoc?useUnicode=yes&characterEncoding=utf-8", "root","");
             } catch(Exception e){
                 e.printStackTrace();
