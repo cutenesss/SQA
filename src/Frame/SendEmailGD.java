@@ -115,6 +115,7 @@ public class SendEmailGD extends javax.swing.JFrame {
                 dsf.taobang(index);
                 dsf.setVisible(true);
             }
+            dispose();
             isPushed = false;
             return label;
         }
@@ -178,7 +179,7 @@ public class SendEmailGD extends javax.swing.JFrame {
 
         jLabel1.setText("Danh sách hộ gia đình");
 
-        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất  cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa" }));
+        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa", "Nam Từ Liêm" }));
         Quan_selected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Quan_selectedActionPerformed(evt);
@@ -263,7 +264,7 @@ public class SendEmailGD extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null,"Không có dữ liệu");
                     HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
                     model.setRowCount(0);
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 0; i++) {
                         model.addRow(s.getObject1(0));
                     }
                 }
@@ -273,7 +274,7 @@ public class SendEmailGD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Không có dữ liệu");
             HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
             model.setRowCount(0);
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 0; i++) {
                 model.addRow(s.getObject1(0));
             }
         }

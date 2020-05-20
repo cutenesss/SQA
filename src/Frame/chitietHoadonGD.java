@@ -11,7 +11,6 @@ import DAO.HoaDonDAO;
 import static Frame.SendEmailGD.PASS;
 import static Frame.SendEmailGD.SUB;
 import static Frame.SendEmailGD.USER;
-import static Frame.SendEmailGD.listHoGD;
 import Object.CauHinh;
 import Object.HoGiaDinh;
 import Object.HoaDon;
@@ -74,10 +73,15 @@ public class chitietHoadonGD extends javax.swing.JFrame {
         }
         if(hgd!= null){
             edt_tenchuho.setText(hgd.getTenChuHo().toString());
-        edt_diachi.setText(hgd.getDiaChi().toString());
-        edt_maho.setText(hgd.getMaHoGD());
-        edt_sdt.setText(hgd.getSdt());
-        edt_email.setText(hgd.getEmail());
+            edt_diachi.setText(hgd.getDiaChi().toString());
+            edt_maho.setText(hgd.getMaHoGD());
+            edt_sdt.setText(hgd.getSdt());
+            edt_email.setText(hgd.getEmail());
+            edt_tenchuho.setEditable(false);
+            edt_diachi.setEditable(false);
+            edt_maho.setEditable(false);
+            edt_sdt.setEditable(false);
+            edt_email.setEditable(false);
         }
     }
 

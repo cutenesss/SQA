@@ -47,6 +47,11 @@ public class DetailHoGD extends javax.swing.JFrame {
         jTextField3.setText(DanhSachHoGD.getHoGD().getMaHoGD());
         jTextField4.setText(DanhSachHoGD.getHoGD().getSdt());
         jTextField5.setText(DanhSachHoGD.getHoGD().getEmail());
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
         jTable1.getColumn("Chi tiết").setCellRenderer(new DetailHoGD.ButtonRenderer());
         jTable1.getColumn("Chi tiết").setCellEditor(new DetailHoGD.ButtonEditor(new JCheckBox()));
         HoaDonDAO st = new HoaDonDAO();
@@ -148,10 +153,11 @@ public class DetailHoGD extends javax.swing.JFrame {
         public Object getCellEditorValue() {
             if (isPushed) {
                 CauHinhChiTiet dsf = new CauHinhChiTiet();
-                dsf.taoBang(result.getIdcauhinh());
+                dsf.taoBang(result.getIdcauhinh(), "hogd");
                 dsf.setVisible(true);
             }
             isPushed = false;
+            dispose();
             return label;
         }
 

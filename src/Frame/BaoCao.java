@@ -235,7 +235,7 @@ public class BaoCao extends javax.swing.JFrame {
        listUsedWater = st.getTotalWaterUsed(ngayBD, ngayKT);
        jTextField5.setText(listUsedWater.get(0).toString());
        jTextField4.setText(listTotalWater.get(0).toString());
-       listUsedSettingID = st.getUsedCount(ngayBD, ngayBD);
+       listUsedSettingID = st.getUsedCount(ngayBD, ngayKT);
        CauHinhDAO sb = new CauHinhDAO();
        listUsedSetting = sb.getCauHinh(listUsedSettingID.get(0));
        double bill = tinh(listUsedSetting.get(0), listUsedWater.get(0));
