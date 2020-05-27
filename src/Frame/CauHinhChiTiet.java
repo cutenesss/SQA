@@ -22,6 +22,7 @@ public class CauHinhChiTiet extends javax.swing.JFrame {
     
     DefaultTableModel dtm;    
     public static ArrayList<CauHinh> cauHinh;
+    String des;
     
     public CauHinhChiTiet() {
         initComponents();
@@ -29,7 +30,8 @@ public class CauHinhChiTiet extends javax.swing.JFrame {
         dtm = (DefaultTableModel) jTable1.getModel();
     }
     
-    public void taoBang(int id){
+    public void taoBang(int id, String des){
+        this.des = des;
         CauHinhDAO listCauHinh = new CauHinhDAO();
         cauHinh = listCauHinh.getCauHinh(id);
         CauHinh c = cauHinh.get(0);
@@ -136,6 +138,9 @@ public class CauHinhChiTiet extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
+        if(des.equals("hogd")) {
+            new DetailHoGD().setVisible(true);
+        } else new ListCauHinh().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

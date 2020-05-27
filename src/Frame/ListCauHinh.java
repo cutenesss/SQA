@@ -110,11 +110,11 @@ public class ListCauHinh extends javax.swing.JFrame {
         public Object getCellEditorValue() {
             if (isPushed) {
                 CauHinhChiTiet dsf = new CauHinhChiTiet();
-                dsf.taoBang(result.getIdcauhinh());
-                System.out.println(result.getIdcauhinh());
+                dsf.taoBang(result.getIdcauhinh(), "listCH");
                 dsf.setVisible(true);
             }
             isPushed = false;
+            dispose();
             return label;
         }
 

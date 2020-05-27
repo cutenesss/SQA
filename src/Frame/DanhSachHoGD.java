@@ -186,7 +186,7 @@ public class DanhSachHoGD extends javax.swing.JFrame {
 
         jLabel2.setText("Quận");
 
-        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa" }));
+        Quan_selected.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả", "Hoàn Kiếm", "Cầu Giấy", "Đống Đa", "Nam Từ Liêm" }));
         Quan_selected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Quan_selectedActionPerformed(evt);
@@ -205,7 +205,7 @@ public class DanhSachHoGD extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(51, 51, 51)
+                        .addGap(18, 18, 18)
                         .addComponent(Quan_selected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(123, 123, 123))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -257,9 +257,9 @@ public class DanhSachHoGD extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null,"Không có dữ liệu");
                     HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
                     dtm.setRowCount(0);
-//                    for (int i = 0; i < 3; i++) {
-//                        dtm.addRow(s.getObject1(0));
-//                    }
+                    for (int i = 0; i < 0; i++) {
+                        dtm.addRow(s.getObject1(0));
+                    }
                 }
             }
 
@@ -267,9 +267,9 @@ public class DanhSachHoGD extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Không có dữ liệu");
             HoGiaDinh s = new HoGiaDinh(0, null, null, "", "", "");
             dtm.setRowCount(0);
-//            for (int i = 0; i < 3; i++) {
-//                dtm.addRow(s.getObject1(0));
-//            }
+            for (int i = 0; i < 0; i++) {
+                dtm.addRow(s.getObject1(0));
+            }
         }
     }//GEN-LAST:event_Quan_selectedActionPerformed
 
