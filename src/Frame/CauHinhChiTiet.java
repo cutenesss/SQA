@@ -21,7 +21,7 @@ public class CauHinhChiTiet extends javax.swing.JFrame {
      */
     
     DefaultTableModel dtm;    
-    public static ArrayList<CauHinh> cauHinh;
+    public static CauHinh cauHinh;
     String des;
     
     public CauHinhChiTiet() {
@@ -33,8 +33,8 @@ public class CauHinhChiTiet extends javax.swing.JFrame {
     public void taoBang(int id, String des){
         this.des = des;
         CauHinhDAO listCauHinh = new CauHinhDAO();
-        cauHinh = listCauHinh.getCauHinh(id);
-        CauHinh c = cauHinh.get(0);
+        CauHinh c = listCauHinh.getCauHinh(id);
+//        CauHinh c = cauHinh;
         for (int i = 0; i < 3; i++) {
             double muc = 0;
             switch (i) {

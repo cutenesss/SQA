@@ -32,7 +32,18 @@ public class CauHinh {
     }
 
     public CauHinh(){
-        
+    }
+
+    public CauHinh(int idcauhinh, double muc1, double muc2, double muc3, double muc4, double chiSoMuc1, double chiSoMuc2, double chiSoMuc3, Date ngayApDung) {
+        this.idcauhinh = idcauhinh;
+        this.muc1 = muc1;
+        this.muc2 = muc2;
+        this.muc3 = muc3;
+        this.muc4 = muc4;
+        this.chiSoMuc1 = chiSoMuc1;
+        this.chiSoMuc2 = chiSoMuc2;
+        this.chiSoMuc3 = chiSoMuc3;
+        this.ngayApDung = ngayApDung;
     }
 
     public CauHinh(int idcauhinh) {

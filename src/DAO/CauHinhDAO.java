@@ -21,7 +21,7 @@ public class CauHinhDAO extends DAO {
         getInstance();
     }
     
-    public ArrayList<CauHinh> getCauHinh(int i){
+    public CauHinh getCauHinh(int i){
         ArrayList<CauHinh> cauHinh = new ArrayList<>();
         String sql = "SELECT * FROM qlnuoc.cauhinh WHERE qlnuoc.cauhinh.idcauhinh = ?";
         try{
@@ -44,7 +44,8 @@ public class CauHinhDAO extends DAO {
         } catch(SQLException e){ 
             e.printStackTrace();
         }
-        return cauHinh;
+        if(cauHinh.size() != 0) return cauHinh.get(0);
+        else return null;
     }
     
     public ArrayList<CauHinh> getListCauHinh(){
