@@ -5,6 +5,7 @@
  */
 package Frame;
 
+import Controller.MakingBill;
 import DAO.CauHinhDAO;
 import DAO.HoaDonDAO;
 import Object.CauHinh;
@@ -34,7 +35,7 @@ public class DetailHoGD extends javax.swing.JFrame {
      */
     DefaultTableModel dtm;    
     public static ArrayList<HoaDon> listHoaDon;
-    public static ArrayList<CauHinh> cauHinh;
+    public static CauHinh cauHinh;
     public static CauHinh result;
     private boolean isPushed;
     
@@ -68,7 +69,8 @@ public class DetailHoGD extends javax.swing.JFrame {
                 double a = listHoaDon.get(i).getSoNuoc().getChiSoBD();
                 double b = listHoaDon.get(i).getSoNuoc().getChiSoKT();
                 double all = b-a;
-                double bill = tinh(cauHinh.get(0), all);
+                MakingBill m = new MakingBill();
+                double bill = m.tinh(cauHinh, all);
                 dtm.addRow(listHoaDon.get(i).getObject(i + 1, bill));
             }
         } 
@@ -82,22 +84,6 @@ public class DetailHoGD extends javax.swing.JFrame {
     
     public static CauHinh getCauHinh() {
         return result;
-    }
-    
-    public static double tinh(CauHinh c, double a){
-        if (a <= c.getChiSoMuc1()) return a * c.getMuc1();
-        else if (a <= c.getChiSoMuc2() ) {
-            double s = c.getChiSoMuc1()* c.getMuc1() + (a-c.getChiSoMuc1()) * c.getMuc2();
-            return s;
-        }
-        else if (a <= c.getChiSoMuc3() ){
-            double s = c.getChiSoMuc1()* c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + (a-c.getChiSoMuc3()) * c.getMuc3();
-            return s;
-        }
-        else {
-            double s = c.getChiSoMuc1()* c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + c.getChiSoMuc3() * c.getMuc3() + (a-c.getChiSoMuc3()) * c.getMuc4();
-            return s;
-        }
     }
     
     class ButtonRenderer extends JButton implements TableCellRenderer {

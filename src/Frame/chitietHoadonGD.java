@@ -5,6 +5,7 @@
  */
 package Frame;
 
+import Controller.MakingBill;
 import Controller.SendMailBySite;
 import DAO.CauHinhDAO;
 import DAO.HoaDonDAO;
@@ -32,7 +33,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
     public static int index = -1;// id ho gia dinh
     DefaultTableModel dtm;
     public static ArrayList<HoaDon> listHoaDon;
-    public static ArrayList<CauHinh> ListcauHinh;
+    public static CauHinh ListcauHinh;
     public static HoaDon hoadon;
     public static HoGiaDinh hgd;
     public static SoNuoc soNuoc;
@@ -105,7 +106,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             chisoBD = soNuoc.getChiSoBD();
             chisoKT = soNuoc.getChiSoKT();
             // so tien tung muc
-            CauHinh cauHinh = ListcauHinh.get(0);
+            CauHinh cauHinh = ListcauHinh;
             muc1 = cauHinh.getMuc1();
             muc2 = cauHinh.getMuc2();
             muc3 = cauHinh.getMuc3();
@@ -119,7 +120,8 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             tongNuoc = chisoKT - chisoBD;
             //tach so nuoc
             TachSoNuoc(cauHinh, tongNuoc);
-            tien = tinh(cauHinh, tongNuoc);
+            MakingBill m = new MakingBill();
+            tien = m.tinh(cauHinh, tongNuoc);
             System.out.println("tien = "+tien);
             // set vao cac cot
             dtm.addRow(new Object[]{nbd, nkt, chisoBD, chisoKT, nTT, tongNuoc, Tieumuc1, muc1, Tieumuc1 * muc1, null});
@@ -151,22 +153,6 @@ public class chitietHoadonGD extends javax.swing.JFrame {
             Tieumuc2 = c.getChiSoMuc2();
             Tieumuc3 = c.getChiSoMuc3();
             Tieumuc4 = a - c.getChiSoMuc3();
-        }
-    }
-
-    // tính tien nuoc
-    public static double tinh(CauHinh c, double a) {
-        if (a <= c.getChiSoMuc1()) {
-            return a * c.getMuc1();
-        } else if (a <= c.getChiSoMuc2()) {
-            double s = c.getChiSoMuc1() * c.getMuc1() + (a - c.getChiSoMuc1()) * c.getMuc2();
-            return s;
-        } else if (a <= c.getChiSoMuc3()) {
-            double s = c.getChiSoMuc1() * c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + (a - c.getChiSoMuc3()) * c.getMuc3();
-            return s;
-        } else {
-            double s = c.getChiSoMuc1() * c.getMuc1() + c.getChiSoMuc2() * c.getMuc2() + c.getChiSoMuc3() * c.getMuc3() + (a - c.getChiSoMuc3()) * c.getMuc4();
-            return s;
         }
     }
 
@@ -337,7 +323,7 @@ public class chitietHoadonGD extends javax.swing.JFrame {
                 + "\n Tên chủ hộ: " + hgd.getTenChuHo()
                 + "\n Số điện thoại: " + hgd.getSdt()
                 + "\n Địa chỉ: " + hgd.getDiaChi();
-     MESS+="\n\n"
+        MESS+="\n\n"
              +" Chỉ số nước kì trước(ngày: "+nbd+"): "+chisoBD+"\t chỉ số nước kì này(ngày: "+nkt+"): "+chisoKT
              +"\n Các mức chi tiết:"
              +"\n Mức 1: "+Tieumuc1+"\t Đơn giá: "+muc1+"\t Tiền mức 1 = "+Tieumuc1*muc1

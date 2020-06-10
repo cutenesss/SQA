@@ -10,6 +10,7 @@ import DAO.HoaDonDAO;
 import Object.CauHinh;
 import java.util.*;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,10 +21,10 @@ public class BaoCao extends javax.swing.JFrame {
     /**
      * Creates new form BaoCao
      */
-    public static ArrayList<Double> listUsedWater;
-    public static ArrayList<Double> listTotalWater;
+    public static Double listUsedWater;
+    public static Double listTotalWater;
     public static ArrayList<Integer> listUsedSettingID;
-    public static ArrayList<CauHinh> listUsedSetting;
+    public static CauHinh listUsedSetting;
     public static ArrayList<Integer> listTotalUser;
     public static ArrayList<Integer> listPaidUser;
     double usedWater;
@@ -229,21 +230,35 @@ public class BaoCao extends javax.swing.JFrame {
           break;  
         default:
           // code block
-      }
-       HoaDonDAO st = new HoaDonDAO();
-       listTotalWater = st.getTotalWater(ngayBD, ngayKT);
-       listUsedWater = st.getTotalWaterUsed(ngayBD, ngayKT);
-       jTextField5.setText(listUsedWater.get(0).toString());
-       jTextField4.setText(listTotalWater.get(0).toString());
-       listUsedSettingID = st.getUsedCount(ngayBD, ngayKT);
-       CauHinhDAO sb = new CauHinhDAO();
-       listUsedSetting = sb.getCauHinh(listUsedSettingID.get(0));
-       double bill = tinh(listUsedSetting.get(0), listUsedWater.get(0));
-       jTextField3.setText(Double.toString(bill));
-       listTotalUser=st.getTotalUser(ngayBD, ngayKT);
-       listPaidUser=st.getTotalPaidUser(ngayBD, ngayKT);
-       jTextField1.setText(listPaidUser.get(0).toString());
-       jTextField2.setText(listTotalUser.get(0).toString());
+      }        
+       try{
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            HoaDonDAO st = new HoaDonDAO();
+            listTotalWater = st.getTotalWater(ngayBD, ngayKT);
+            listUsedWater = st.getTotalWaterUsed(ngayBD, ngayKT);
+            if(listTotalWater == 0.0 || listUsedWater==0.0){
+             jTextField4.setText("");
+             jTextField5.setText("");
+            } else{
+                jTextField5.setText(listUsedWater.toString());
+                jTextField4.setText(listTotalWater.toString());
+            }
+            listUsedSettingID = st.getUsedCount(ngayBD, ngayKT);
+            CauHinhDAO sb = new CauHinhDAO();
+            listUsedSetting = sb.getCauHinh(listUsedSettingID.get(0));
+            double bill = tinh(listUsedSetting, listUsedWater);
+            jTextField3.setText(Double.toString(bill));
+            listTotalUser=st.getTotalUser(ngayBD, ngayKT);
+            listPaidUser=st.getTotalPaidUser(ngayBD, ngayKT);
+            jTextField1.setText(listPaidUser.get(0).toString());
+            jTextField2.setText(listTotalUser.get(0).toString());
+       } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Chưa có hóa đơn");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static double tinh(CauHinh c, double a){
