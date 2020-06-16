@@ -82,5 +82,8 @@ public class HoGiaDinh {
             order, this.getTenChuHo(), this.getDiaChi(), this.getSdt(), this.getMaHoGD(),this.getEmail()
         };
     }
+    public String toString(){
+        return ""+idHoGD+","+tenChuHo+","+diaChi+","+sdt+","+maHoGD+","+email;
+    }
     
 }

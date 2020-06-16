@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class SendMailBySite
 {
 
-    public static void send(String to, String sub,String msg, String user, String pass) 
+    public static String send(String to, String sub,String msg, String user, String pass) 
     {
         Properties props = new Properties();
         
@@ -47,15 +47,14 @@ public class SendMailBySite
             message.setText(msg);
 
             Transport.send(message);
-            
-            
-            
+            return "Đã gửi xong";
         } catch (MessagingException e) 
         {
-            JOptionPane.showMessageDialog(null,"Có lỗi xảy ra!");
-            
-            throw new RuntimeException(e);
+//            JOptionPane.showMessageDialog(null,"Có lỗi xảy ra!");
+//            
+//            throw new RuntimeException(e);
+           
         }
-        
+         return "Có lỗi xảy ra";
     }
 }

@@ -332,8 +332,8 @@ public class chitietHoadonGD extends javax.swing.JFrame {
               +"\n Mức 4: "+Tieumuc4+"\t Đơn giá: "+muc4+"\t Tiền mức 4 = "+Tieumuc4*muc4
              +"\nTổng số nước đã tiêu thụ: "+tongNuoc
              +"\nTổng tiền: "+tien;
-        SendMailBySite.send(TO, SUB, MESS, USER, PASS);
-        JOptionPane.showMessageDialog(null, "Đã gửi xong!");
+       String s =  SendMailBySite.send(TO, SUB, MESS, USER, PASS);
+        JOptionPane.showMessageDialog(null, s);
     }//GEN-LAST:event_btn_sendActionPerformed
 
     /**

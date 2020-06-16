@@ -34,8 +34,8 @@ public class CauHinhDAOTest {
         Assert.assertNotNull(cauHinh);
         Assert.assertEquals(1, cauHinh.getIdcauhinh());
         Assert.assertEquals((long) 5.0,(long) cauHinh.getChiSoMuc1());
-        Assert.assertEquals((long) 10.0,(long) cauHinh.getChiSoMuc2());
-        Assert.assertEquals((long) 15.0, (long) cauHinh.getChiSoMuc3());
+        Assert.assertEquals((long) 1000.0,(long) cauHinh.getChiSoMuc2());
+        Assert.assertEquals((long) 1500.0, (long) cauHinh.getChiSoMuc3());
         Assert.assertEquals((long) 4000.0, (long) cauHinh.getMuc1());
         Assert.assertEquals((long) 5000.0, (long) cauHinh.getMuc2());
         Assert.assertEquals((long) 6000.0, (long) cauHinh.getMuc3());
@@ -49,7 +49,7 @@ public class CauHinhDAOTest {
         CauHinhDAO st = new CauHinhDAO();
         ArrayList<CauHinh> listCauHinh = st.getListCauHinh();
         Assert.assertNotNull(listCauHinh);
-        Assert.assertEquals(3, listCauHinh.size());
+        Assert.assertEquals(4, listCauHinh.size());
         return;
     }
     
