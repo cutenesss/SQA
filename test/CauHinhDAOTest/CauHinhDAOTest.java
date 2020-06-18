@@ -63,7 +63,6 @@ public class CauHinhDAOTest {
         Assert.assertNotNull(cauHinh);
         Assert.assertTrue(3 < cauHinh.getIdcauhinh()); 
         Assert.assertEquals(4, st.getListCauHinh().size()); 
- 
         Date date=Date.valueOf("2020-07-01");
         CauHinh c = st.getCauHinh(cauHinh.getIdcauhinh());
         Assert.assertEquals(1, c.getIdcauhinh());

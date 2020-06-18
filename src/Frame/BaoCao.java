@@ -23,10 +23,10 @@ public class BaoCao extends javax.swing.JFrame {
      */
     public static Double listUsedWater;
     public static Double listTotalWater;
-    public static ArrayList<Integer> listUsedSettingID;
+    public static int listUsedSettingID;
     public static CauHinh listUsedSetting;
-    public static ArrayList<Integer> listTotalUser;
-    public static ArrayList<Integer> listPaidUser;
+    public static int listTotalUser;
+    public static int listPaidUser;
     double usedWater;
     double totalWater;
     JComboBox cbx1 = new JComboBox();
@@ -249,13 +249,13 @@ public class BaoCao extends javax.swing.JFrame {
             }
             listUsedSettingID = st.getUsedCount(ngayBD, ngayKT);
             CauHinhDAO sb = new CauHinhDAO();
-            listUsedSetting = sb.getCauHinh(listUsedSettingID.get(0));
+            listUsedSetting = sb.getCauHinh(listUsedSettingID);
             double bill = tinh(listUsedSetting, listUsedWater);
             jTextField3.setText(Double.toString(bill));
             listTotalUser=st.getTotalUser(ngayBD, ngayKT);
             listPaidUser=st.getTotalPaidUser(ngayBD, ngayKT);
-            jTextField1.setText(listPaidUser.get(0).toString());
-            jTextField2.setText(listTotalUser.get(0).toString());
+            jTextField1.setText(Integer.toString(listPaidUser));
+            jTextField2.setText(Integer.toString(listTotalUser));
        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Chưa có hóa đơn");
         }

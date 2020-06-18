@@ -29,17 +29,21 @@ public class HoaDonDAOTest {
     }
     
     @Test
-    public void testGetTotalWaterUsed(){
+    public void testGetTotalWaterUsed1(){
         HoaDonDAO st = new HoaDonDAO();
         // exception
         double usedWater = st.getTotalWaterUsed("2020-02-01","2020-02-28");
         Assert.assertNotNull(usedWater);
         Assert.assertEquals((long) 0.0,(long) usedWater);
+    }
+    
+    @Test
+    public void testGetTotalWaterUsed2(){
+        HoaDonDAO st = new HoaDonDAO();
         // standard
-        usedWater = st.getTotalWaterUsed("2020-01-01","2020-01-28");
+        double usedWater = st.getTotalWaterUsed("2020-01-01","2020-01-28");
         Assert.assertNotNull(usedWater);
         Assert.assertEquals((long) 150.0,(long) usedWater);
-        return;
     }
     
     @Test
@@ -53,44 +57,68 @@ public class HoaDonDAOTest {
         usedWater = st.getTotalWater("2020-01-01","2020-01-28");
         Assert.assertNotNull(usedWater);
         Assert.assertEquals((long) 150.0,(long) usedWater);
-        return;
     }
     
     @Test
-    public void testGetUsedCount(){
+    public void testGetUsedCount1(){
         HoaDonDAO st = new HoaDonDAO();
         // exception
-        ArrayList<Integer> usedWater = st.getUsedCount("2020-02-01","2020-02-28");
-        Assert.assertNotNull(usedWater);
-        Assert.assertEquals((int) 1,(int) usedWater.get(0));
-        return;
+        int usedCount = st.getUsedCount("2020-02-01","2020-02-28");
+        Assert.assertNotNull(usedCount);
+        Assert.assertEquals((long) 0.0,(long) usedCount);
     }
     
     @Test
-    public void testGetTotalPaidUser(){
+    public void testGetUsedCount2(){
+        HoaDonDAO st = new HoaDonDAO();
+        // standard
+        int usedCount = st.getUsedCount("2020-01-01","2020-01-28");
+        Assert.assertNotNull(usedCount);
+        Assert.assertEquals((long) 1.0,(long) usedCount);
+    }
+    
+    @Test
+    public void testGetTotalPaidUser1(){
         HoaDonDAO st = new HoaDonDAO();
         // exception
-        ArrayList<Integer> user = st.getTotalPaidUser("2020-02-01","2020-02-28");
+        int user = st.getTotalPaidUser("2020-02-01","2020-02-28");
         Assert.assertNotNull(user);
-        Assert.assertEquals((int) 0,(int) user.get(0));
+        Assert.assertEquals((int) 0,(int) user);
         // standard
         user = st.getTotalUser("2020-01-01","2020-01-28");
         Assert.assertNotNull(user);
-        Assert.assertEquals((int) 4,(int) user.get(0));
-        return;
+        Assert.assertEquals((int) 4,(int) user);
     }
     
     @Test
-    public void testGetTotalUser(){
+    public void testGetTotalPaidUser2(){
+        HoaDonDAO st = new HoaDonDAO();
+        // standard
+        int user = st.getTotalUser("2020-01-01","2020-01-28");
+        Assert.assertNotNull(user);
+        Assert.assertEquals((int) 4,(int) user);
+    }
+    
+    @Test
+    public void testGetTotalUser1(){
         HoaDonDAO st = new HoaDonDAO();
         // exception
-        ArrayList<Integer> user = st.getTotalUser("2020-02-01","2020-02-28");
+        int user = st.getTotalUser("2020-02-01","2020-02-28");
         Assert.assertNotNull(user);
-        Assert.assertEquals((int) 0,(int) user.get(0));
+        Assert.assertEquals((int) 0,(int) user);
         // standard
         user = st.getTotalUser("2020-01-01","2020-01-28");
         Assert.assertNotNull(user);
-        Assert.assertEquals((int) 4,(int) user.get(0));
+        Assert.assertEquals((int) 4,(int) user);
+    }
+    
+     @Test
+    public void testGetTotalUser2(){
+        HoaDonDAO st = new HoaDonDAO();
+        // standard
+        int user = st.getTotalUser("2020-01-01","2020-01-28");
+        Assert.assertNotNull(user);
+        Assert.assertEquals((int) 4,(int) user);
         return;
     }
 }
