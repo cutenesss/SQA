@@ -14,12 +14,11 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.PasswordAuthentication;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JOptionPane;
 
 public class SendMailBySite
 {
 
-    public static void send(String to, String sub,String msg, String user, String pass) 
+    public static String send(String to, String sub,String msg, String user, String pass) 
     {
         Properties props = new Properties();
         
@@ -45,17 +44,15 @@ public class SendMailBySite
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(sub);
             message.setText(msg);
-
             Transport.send(message);
-            
-            
-            
+            return "Đã gửi xong";
         } catch (MessagingException e) 
         {
-            JOptionPane.showMessageDialog(null,"Có lỗi xảy ra!");
-            
-            throw new RuntimeException(e);
+//            JOptionPane.showMessageDialog(null,"Có lỗi xảy ra!");
+//            
+//            throw new RuntimeException(e);
+           
         }
-        
+         return "Có lỗi xảy ra";
     }
 }
