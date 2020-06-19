@@ -10,6 +10,7 @@ import Object.CauHinh;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +42,6 @@ public class CauHinhDAOTest {
         Assert.assertEquals((long) 6000.0, (long) cauHinh.getMuc3());
         Assert.assertEquals((long) 7000.0, (long) cauHinh.getMuc4());
         Assert.assertEquals(date, cauHinh.getNgayApDung());
-        return;
     }
     
     @Test
@@ -50,7 +50,6 @@ public class CauHinhDAOTest {
         ArrayList<CauHinh> listCauHinh = st.getListCauHinh();
         Assert.assertNotNull(listCauHinh);
         Assert.assertEquals(3, listCauHinh.size());
-        return;
     }
     
     @Test
@@ -64,7 +63,6 @@ public class CauHinhDAOTest {
         Assert.assertNotNull(cauHinh);
         Assert.assertTrue(3 < cauHinh.getIdcauhinh()); 
         Assert.assertEquals(4, st.getListCauHinh().size()); 
- 
         Date date=Date.valueOf("2020-07-01");
         CauHinh c = st.getCauHinh(cauHinh.getIdcauhinh());
         Assert.assertEquals(1, c.getIdcauhinh());
@@ -76,16 +74,13 @@ public class CauHinhDAOTest {
         Assert.assertEquals((long) 8500.0, (long) c.getMuc3());
         Assert.assertEquals((long) 9000.0, (long) c.getMuc4());
         Assert.assertEquals(date, c.getNgayApDung());
-    }catch(Exception e){
-        e.printStackTrace();
+    }catch(SQLException e){
     }finally{
         try{
             con.rollback();
             con.setAutoCommit(true);
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(SQLException e){
         }
     }
-    return;
     }
 }

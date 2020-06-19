@@ -76,19 +76,18 @@ public class HoaDonDAO extends DAO {
                 totalWaterUsed.add(s);
             }
         } catch(SQLException e){ 
-            e.printStackTrace();
         }
-        if(totalWaterUsed.get(0) != 0.0) return totalWaterUsed.get(0);
+        if(totalWaterUsed.get(0) != 0.0 && !totalWaterUsed.isEmpty()) return totalWaterUsed.get(0);
         else return 0.0;
     }
     
-    public ArrayList<Integer> getUsedCount(String sd, String ed){
+    public int getUsedCount(String sd, String ed){
         ArrayList<Integer> totalUsedCount = new ArrayList<>();
         String sql = "SELECT qlnuoc.hoadon.id_cauHinh\n" +
                         "FROM qlnuoc.hoadon, qlnuoc.sonuoc, qlnuoc.ho_gia_dinh\n" +
                         "where qlnuoc.hoadon.id_ho_GD=qlnuoc.ho_gia_dinh.idHoGD\n" +
                         "and qlnuoc.sonuoc.idsoNuoc=qlnuoc.hoadon.idSoNuoc\n" +
-                        "and qlnuoc.hoadon.id_ho_GD=1\n" +
+                        "and qlnuoc.ho_gia_dinh.idHoGD=1\n" +
                         "and qlnuoc.hoadon.ngayThanhToan != ''\n" +
                         "and qlnuoc.sonuoc.ngayBD>=?\n" +
                         "and qlnuoc.sonuoc.ngayBD<=?";
@@ -102,9 +101,9 @@ public class HoaDonDAO extends DAO {
                 totalUsedCount.add(s);
             }
         } catch(SQLException e){ 
-            e.printStackTrace();
         }
-        return totalUsedCount;
+        if(!totalUsedCount.isEmpty()) return totalUsedCount.get(0);
+        else return 0;
     }
     
     public Double getTotalWater(String sd, String ed){
@@ -131,7 +130,7 @@ public class HoaDonDAO extends DAO {
         else return 0.0;
     }
     
-    public ArrayList<Integer> getTotalUser(String sd, String ed){
+    public int getTotalUser(String sd, String ed){
         ArrayList<Integer> totalUser = new ArrayList<>();
         String sql = "SELECT COUNT(qlnuoc.sonuoc.chiSoKT)\n" +
                         "FROM qlnuoc.hoadon, qlnuoc.sonuoc, qlnuoc.ho_gia_dinh\n" +
@@ -151,10 +150,11 @@ public class HoaDonDAO extends DAO {
         } catch(SQLException e){ 
             e.printStackTrace();
         }
-        return totalUser;
+        if(totalUser.get(0) != 0) return totalUser.get(0);
+        else return 0;
     }
     
-    public ArrayList<Integer> getTotalPaidUser(String sd, String ed){
+    public int getTotalPaidUser(String sd, String ed){
         ArrayList<Integer> totalPaidUser = new ArrayList<>();
         String sql = "SELECT COUNT(qlnuoc.sonuoc.chiSoKT)\n" +
                         "FROM qlnuoc.hoadon, qlnuoc.sonuoc, qlnuoc.ho_gia_dinh\n" +
@@ -175,6 +175,7 @@ public class HoaDonDAO extends DAO {
         } catch(SQLException e){ 
             e.printStackTrace();
         }
-        return totalPaidUser;
+        if(totalPaidUser.get(0) != 0) return totalPaidUser.get(0);
+        else return 0;
     }
 }

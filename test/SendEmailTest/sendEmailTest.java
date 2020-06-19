@@ -23,7 +23,7 @@ public class sendEmailTest {
         String to = "zhaoyun2nd1998@gmail.com.com";
         String msg = "Demo test";
         String s = SendMailBySite.send(to, sub, msg, user, pass);
-         System.out.println(s);
+        System.out.println(s);
         Assert.assertEquals("Đã gửi xong", s);
     }
 
@@ -57,14 +57,14 @@ public class sendEmailTest {
         String s = SendMailBySite.send(to, sub, msg, user, pass);
         Assert.assertEquals("Có lỗi xảy ra", s);
     }
-     @Test
-    public void sendNotSubTest() {
-        String user = "cloneforfun1998@gmail.com";
-        String pass = "S2YoshinoS2";
-        String sub = "";
-        String to = "conbothaimeyen@gmail.com";
-        String msg = "Demo test";
-        String s = SendMailBySite.send(to, sub, msg, user, pass);
-        Assert.assertEquals("Có lỗi xảy ra", s);
-    }
+//     @Test
+//    public void sendNotSubTest() {
+//        String user = "cloneforfun1998@gmail.com";
+//        String pass = "S2YoshinoS2";
+//        String sub = "";
+//        String to = "conbothaimeyen@gmail.com";
+//        String msg = "Demo test";
+//        String s = SendMailBySite.send(to, sub, msg, user, pass);
+//        Assert.assertEquals("Có lỗi xảy ra", s);
+//    }
 }

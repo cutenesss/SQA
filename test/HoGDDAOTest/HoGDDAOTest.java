@@ -28,7 +28,6 @@ public class HoGDDAOTest {
         ArrayList<HoGiaDinh> listHoGD = st.getListHoGD();
         Assert.assertNotNull(listHoGD);
         Assert.assertEquals(4, listHoGD.size());
-        return;
     }
 
     @Test
@@ -38,7 +37,6 @@ public class HoGDDAOTest {
         ArrayList<HoGiaDinh> listHoGiaDinh = st.getListHoGDByDistrict("Hoàn Kiếm");
         Assert.assertNotNull(listHoGiaDinh);
         Assert.assertEquals(2, listHoGiaDinh.size());
-        return;
     }
 
     @Test

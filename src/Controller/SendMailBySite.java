@@ -14,7 +14,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.PasswordAuthentication;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JOptionPane;
 
 public class SendMailBySite
 {
@@ -45,7 +44,6 @@ public class SendMailBySite
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(sub);
             message.setText(msg);
-
             Transport.send(message);
             return "Đã gửi xong";
         } catch (MessagingException e) 
