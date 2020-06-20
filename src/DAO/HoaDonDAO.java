@@ -38,7 +38,7 @@ public class HoaDonDAO extends DAO {
             while(rs.next()){
                 HoaDon s = new HoaDon();
                 s.setIdHoaDon(rs.getInt("idhoadon"));
-                s.setHoGD(new HoGiaDinh());
+                s.setHoGD(new HoGiaDinh(rs.getInt("id_ho_gd")));
                 CauHinh c = new CauHinh(rs.getInt("id_cauHinh"));
                 s.setCauHinh(c);
                 s.setNgayThanhToan(rs.getDate("ngayThanhToan"));

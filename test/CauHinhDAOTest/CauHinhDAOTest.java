@@ -10,7 +10,6 @@ import Object.CauHinh;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +21,7 @@ import org.junit.Test;
 public class CauHinhDAOTest {
     public CauHinhDAOTest() {
     }
-    
+
     @Test
     public void testGetCauHinh() throws ParseException{
         CauHinhDAO st = new CauHinhDAO();
@@ -42,16 +41,53 @@ public class CauHinhDAOTest {
         Assert.assertEquals((long) 6000.0, (long) cauHinh.getMuc3());
         Assert.assertEquals((long) 7000.0, (long) cauHinh.getMuc4());
         Assert.assertEquals(date, cauHinh.getNgayApDung());
+        return;
     }
-    
+
     @Test
     public void testGetListCauHinh(){
         CauHinhDAO st = new CauHinhDAO();
         ArrayList<CauHinh> listCauHinh = st.getListCauHinh();
         Assert.assertNotNull(listCauHinh);
         Assert.assertEquals(3, listCauHinh.size());
+        Date date = Date.valueOf("2018-02-01");
+        CauHinh cauHinh = listCauHinh.get(0);
+        Assert.assertNotNull(cauHinh);
+        Assert.assertEquals(1, cauHinh.getIdcauhinh());
+        Assert.assertEquals((long) 5.0,(long) cauHinh.getChiSoMuc1());
+        Assert.assertEquals((long) 10.0,(long) cauHinh.getChiSoMuc2());
+        Assert.assertEquals((long) 15.0, (long) cauHinh.getChiSoMuc3());
+        Assert.assertEquals((long) 4000.0, (long) cauHinh.getMuc1());
+        Assert.assertEquals((long) 5000.0, (long) cauHinh.getMuc2());
+        Assert.assertEquals((long) 6000.0, (long) cauHinh.getMuc3());
+        Assert.assertEquals((long) 7000.0, (long) cauHinh.getMuc4());
+        Assert.assertEquals(date, cauHinh.getNgayApDung());
+        date = Date.valueOf("2019-02-01");
+        cauHinh = listCauHinh.get(1);
+        Assert.assertNotNull(cauHinh);
+        Assert.assertEquals(2, cauHinh.getIdcauhinh());
+        Assert.assertEquals((long) 8.0,(long) cauHinh.getChiSoMuc1());
+        Assert.assertEquals((long) 13.0,(long) cauHinh.getChiSoMuc2());
+        Assert.assertEquals((long) 17.0, (long) cauHinh.getChiSoMuc3());
+        Assert.assertEquals((long) 4500.0, (long) cauHinh.getMuc1());
+        Assert.assertEquals((long) 5600.0, (long) cauHinh.getMuc2());
+        Assert.assertEquals((long) 6700.0, (long) cauHinh.getMuc3());
+        Assert.assertEquals((long) 7800.0, (long) cauHinh.getMuc4());
+        Assert.assertEquals(date, cauHinh.getNgayApDung());
+        date = Date.valueOf("2020-02-01");
+        cauHinh = listCauHinh.get(2);
+        Assert.assertNotNull(cauHinh);
+        Assert.assertEquals(3, cauHinh.getIdcauhinh());
+        Assert.assertEquals((long) 10.0,(long) cauHinh.getChiSoMuc1());
+        Assert.assertEquals((long) 15.0,(long) cauHinh.getChiSoMuc2());
+        Assert.assertEquals((long) 20.0, (long) cauHinh.getChiSoMuc3());
+        Assert.assertEquals((long) 5000.0, (long) cauHinh.getMuc1());
+        Assert.assertEquals((long) 6200.0, (long) cauHinh.getMuc2());
+        Assert.assertEquals((long) 7200.0, (long) cauHinh.getMuc3());
+        Assert.assertEquals((long) 8500.0, (long) cauHinh.getMuc4());
+        Assert.assertEquals(date, cauHinh.getNgayApDung());
     }
-    
+
     @Test
     public void testAddCauHinh() throws ParseException{
         CauHinhDAO st = new CauHinhDAO();
@@ -74,13 +110,16 @@ public class CauHinhDAOTest {
         Assert.assertEquals((long) 8500.0, (long) c.getMuc3());
         Assert.assertEquals((long) 9000.0, (long) c.getMuc4());
         Assert.assertEquals(date, c.getNgayApDung());
-    }catch(SQLException e){
+    }catch(Exception e){
+        e.printStackTrace();
     }finally{
         try{
             con.rollback();
             con.setAutoCommit(true);
-        }catch(SQLException e){
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
+    return;
     }
 }

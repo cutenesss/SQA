@@ -14,7 +14,6 @@ import java.util.Date;
  * @author Cuteness
  */
 public class HoaDon {
-
     private int idHoaDon;
     private HoGiaDinh hoGD;
     private CauHinh cauHinh;
