@@ -38,6 +38,8 @@ public class SendMailBySite
         
         try 
         {
+            if(user.equals("")) return "Không có người gửi";
+            else if(to.equals("")) return "Không có người nhận";
             Message message = new MimeMessage(session);
             
             message.setFrom(new InternetAddress(user));

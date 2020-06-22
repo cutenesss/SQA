@@ -55,7 +55,7 @@ public class sendEmailTest {
         String to = "";
         String msg = "Demo test";
         String s = SendMailBySite.send(to, sub, msg, user, pass);
-        Assert.assertEquals("Có lỗi xảy ra", s);
+        Assert.assertEquals("Không có người nhận", s);
     }
     @Test
     public void sendNotUserTest() {
@@ -65,6 +65,6 @@ public class sendEmailTest {
         String to = "conbothaimeyen@gmail.com";
         String msg = "Demo test";
         String s = SendMailBySite.send(to, sub, msg, user, pass);
-        Assert.assertEquals("Có lỗi xảy ra", s);
+        Assert.assertEquals("Không có người gửi", s);
     }
 }
