@@ -19,6 +19,10 @@ public class HoGiaDinh {
 
     public HoGiaDinh() {
     }
+    
+    public HoGiaDinh(int idHoGD) {
+        this.idHoGD = idHoGD;
+    }
 
     public HoGiaDinh(int idHoGD, HoTen tenChuHo, DiaChi diaChi, String sdt, String maHoGD, String email) {
         this.idHoGD = idHoGD;

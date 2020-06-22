@@ -6,7 +6,11 @@
 package HoaDonDAOTest;
 
 import DAO.HoaDonDAO;
+import Object.CauHinh;
+import Object.HoGiaDinh;
 import Object.HoaDon;
+import Object.SoNuoc;
+import java.sql.Date;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,8 +28,21 @@ public class HoaDonDAOTest {
         HoaDonDAO st = new HoaDonDAO();
         ArrayList<HoaDon> listHoaDon = st.getListHoaDon(1);
         Assert.assertNotNull(listHoaDon);
+        HoaDon hoaDon = listHoaDon.get(0);
         Assert.assertEquals(1, listHoaDon.size());
-        return;
+        Date date = Date.valueOf("2020-02-09");
+        Date date1 = Date.valueOf("2020-01-07");
+        Date date2 = Date.valueOf("2020-02-04");
+        Assert.assertEquals((long) 1.0,(long) hoaDon.getIdHoaDon());
+        Assert.assertEquals((long) 4000.0,(long) hoaDon.getSoNuoc().getChiSoBD());
+        Assert.assertEquals((long) 4025.0,(long) hoaDon.getSoNuoc().getChiSoKT());
+        Assert.assertEquals( date1, hoaDon.getSoNuoc().getNgayBD());
+        Assert.assertEquals( date2, hoaDon.getSoNuoc().getNgayKT());
+        Assert.assertEquals((long) 1.0,(long) hoaDon.getSoNuoc().getIdsoNuoc());
+        Assert.assertEquals((long) 1.0,(long) hoaDon.getHoGD().getIdHoGD());
+        Assert.assertEquals((long) 1.0,(long) hoaDon.getCauHinh().getIdcauhinh());
+        Assert.assertEquals(date, hoaDon.getNgayThanhToan());
+        Assert.assertEquals(date, hoaDon.getNgayThanhToan());
     }
     
     @Test
@@ -84,10 +101,6 @@ public class HoaDonDAOTest {
         int user = st.getTotalPaidUser("2020-02-01","2020-02-28");
         Assert.assertNotNull(user);
         Assert.assertEquals((int) 0,(int) user);
-        // standard
-        user = st.getTotalUser("2020-01-01","2020-01-28");
-        Assert.assertNotNull(user);
-        Assert.assertEquals((int) 4,(int) user);
     }
     
     @Test
@@ -106,10 +119,6 @@ public class HoaDonDAOTest {
         int user = st.getTotalUser("2020-02-01","2020-02-28");
         Assert.assertNotNull(user);
         Assert.assertEquals((int) 0,(int) user);
-        // standard
-        user = st.getTotalUser("2020-01-01","2020-01-28");
-        Assert.assertNotNull(user);
-        Assert.assertEquals((int) 4,(int) user);
     }
     
      @Test

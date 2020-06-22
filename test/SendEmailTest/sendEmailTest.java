@@ -14,17 +14,37 @@ import org.junit.Test;
  * @author DELL
  */
 public class sendEmailTest {
-
     @Test
     public void sendSuccessTest() {
         String user = "cloneforfun1998@gmail.com";
         String pass = "S2YoshinoS2";
         String sub = "Yêu cầu thanh toán tiền nước:";
-        String to = "zhaoyun2nd1998@gmail.com.com";
+        String to = "zhaoyun2nd1998@gmail.com";
         String msg = "Demo test";
         String s = SendMailBySite.send(to, sub, msg, user, pass);
-        System.out.println(s);
         Assert.assertEquals("Đã gửi xong", s);
+    }
+    
+    @Test
+    public void sendNotSubTest() {
+        String user = "cloneforfun1998@gmail.com";
+        String pass = "S2YoshinoS2";
+        String sub = "";
+        String to = "conbothaimeyen@gmail.com";
+        String msg = "Demo test";
+        String s = SendMailBySite.send(to, sub, msg, user, pass);
+        Assert.assertEquals("Đã gửi xong", s);
+    }
+    
+    @Test
+    public void sendToNonExistEmail() {
+        String user = "cloneforfun1998@gmail.com";
+        String pass = "S2YoshinoS2";
+        String sub = "Yêu cầu thanh toán tiền nước:";
+        String to = "asdfghj@xcvbnm,fdfghjk.com.com";
+        String msg = "Demo test";
+        String s = SendMailBySite.send(to, sub, msg, user, pass);
+        Assert.assertEquals("Có lỗi xảy ra", s);
     }
 
     @Test
@@ -47,24 +67,4 @@ public class sendEmailTest {
         String s = SendMailBySite.send(to, sub, msg, user, pass);
         Assert.assertEquals("Có lỗi xảy ra", s);
     }
-    @Test
-    public void sendNotPassTest() {
-        String user = "cloneforfun1998@gmail.com";
-        String pass = "";
-        String sub = "Yêu cầu thanh toán tiền nước:";
-        String to = "conbothaimeyen@gmail.com";
-        String msg = "Demo test";
-        String s = SendMailBySite.send(to, sub, msg, user, pass);
-        Assert.assertEquals("Có lỗi xảy ra", s);
-    }
-//     @Test
-//    public void sendNotSubTest() {
-//        String user = "cloneforfun1998@gmail.com";
-//        String pass = "S2YoshinoS2";
-//        String sub = "";
-//        String to = "conbothaimeyen@gmail.com";
-//        String msg = "Demo test";
-//        String s = SendMailBySite.send(to, sub, msg, user, pass);
-//        Assert.assertEquals("Có lỗi xảy ra", s);
-//    }
 }
